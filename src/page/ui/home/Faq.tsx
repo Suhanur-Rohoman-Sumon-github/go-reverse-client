@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FiPlus } from "react-icons/fi";
 import { FaMinus } from "react-icons/fa6";
+import Title from "../../../componnets/ui/Title";
 
 const Faq = () => {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
@@ -63,10 +64,11 @@ const Faq = () => {
   return (
     <div className="p-6 ">
       <div className="flex items-center justify-center mb-8"></div>
-      <h1 className="text-3xl font-bold text-center text-gray-800 mb-10">
-        Frequently Asked Questions
-      </h1>
-      <div className="space-y-4">
+      <Title
+        title="Frequently asked questions"
+        subTitle="All the question do you have"
+      />
+      <div data-aos="fade-up" className="space-y-4">
         {faqs.map((faq, index) => (
           <div key={faq.id} className=" border rounded-lg">
             <button

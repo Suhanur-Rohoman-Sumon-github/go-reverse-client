@@ -1,3 +1,5 @@
+import Title from "../../../componnets/ui/Title";
+
 const SolutionsWeOffer = () => {
   // Static data for service cards
   const services = [
@@ -58,10 +60,11 @@ const SolutionsWeOffer = () => {
 
   return (
     <div className="">
-      <h1 className="text-3xl font-bold text-center text-gray-800 mb-10">
-        Services We Provide
-      </h1>
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <Title title="Our soloutions" subTitle="our top most soluctions" />
+      <div
+        data-aos="zoom-in-left"
+        className="grid grid-cols-1 md:grid-cols-4 gap-6"
+      >
         {services.map((service) => (
           <div
             key={service.id}

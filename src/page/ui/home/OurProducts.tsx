@@ -2,12 +2,11 @@ import Title from "../../../componnets/ui/Title";
 
 const OurProducts = () => {
   return (
-    <div className="">
+    <div className=" mt-28">
       <Title title="Our Products" subTitle="service we provide" />
 
       <div className=" flex flex-col md:flex-row items-center justify-between  mx-auto  rounded-lg overflow-hidden">
-        {/* Image Container */}
-        <div className="w-full md:w-[40%] mb-6 md:mb-0">
+        <div data-aos="fade-right" className="w-full md:w-[40%] mb-6 md:mb-0">
           <img
             src="https://vizmo.in/_nuxt/img/visitors-product.fab7b64.svg"
             alt="Our Products"
@@ -16,7 +15,10 @@ const OurProducts = () => {
         </div>
 
         {/* Text Content */}
-        <div className="w-full md:w-[60%] text-white md:pl-8">
+        <div
+          data-aos="fade-left"
+          className="w-full md:w-[60%] text-white md:pl-8"
+        >
           <h2 className="text-primary">Explore Our Products</h2>
           <p className="text-secondary">
             Discover a variety of high-quality products crafted to meet your
@@ -31,8 +33,10 @@ const OurProducts = () => {
           </a>
         </div>
       </div>
-      <div className=" flex flex-col-reverse md:flex-row items-center justify-between  mx-auto  rounded-lg overflow-hidden">
-        {/* Text Content */}
+      <div
+        data-aos="fade-right"
+        className=" flex flex-col-reverse md:flex-row items-center justify-between  mx-auto  rounded-lg overflow-hidden"
+      >
         <div className="w-full md:w-[60%] text-white md:pl-8">
           <h2 className="text-primary">Explore Our Products</h2>
           <p className="text-secondary">
@@ -48,7 +52,7 @@ const OurProducts = () => {
           </a>
         </div>
         {/* Image Container */}
-        <div className="w-full md:w-[40%] mb-6 md:mb-0">
+        <div data-aos="flip-left" className="w-full md:w-[40%] mb-6 md:mb-0">
           <img
             src="https://vizmo.in/_nuxt/img/desks-product.f7af245.svg"
             alt="Our Products"
@@ -58,7 +62,10 @@ const OurProducts = () => {
       </div>
       <div className=" flex flex-col md:flex-row items-center justify-between  mx-auto  rounded-lg overflow-hidden">
         {/* Image Container */}
-        <div className="w-full md:w-[40%] mb-6 md:mb-0">
+        <div
+          data-aos="fade-down-right"
+          className="w-full md:w-[40%] mb-6 md:mb-0"
+        >
           <img
             src="https://vizmo.in/_nuxt/img/rooms-product.6050c6a.svg"
             alt="Our Products"
@@ -67,7 +74,10 @@ const OurProducts = () => {
         </div>
 
         {/* Text Content */}
-        <div className="w-full md:w-[60%] text-white md:pl-8">
+        <div
+          data-aos="fade-down-left"
+          className="w-full md:w-[60%] text-white md:pl-8"
+        >
           <h2 className="text-primary">Explore Our Products</h2>
           <p className="text-secondary">
             Discover a variety of high-quality products crafted to meet your

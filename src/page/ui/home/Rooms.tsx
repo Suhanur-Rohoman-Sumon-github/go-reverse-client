@@ -56,7 +56,10 @@ const Rooms = () => {
       <div className="">
         <Title title="Most popular rooms" subTitle="our most visited rooms" />
         {/* Grid layout for the cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div
+          data-aos="flip-left"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
           {rooms.map((room) => (
             <div
               key={room.id}

@@ -3,6 +3,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 
 import { Autoplay } from "swiper/modules";
+import Title from "../../../componnets/ui/Title";
 
 const Testimonial = () => {
   // Example reviews data
@@ -43,7 +44,7 @@ const Testimonial = () => {
 
   return (
     <div className="relative bg-[#dbf2ef] py-16 mb-4">
-      {/* Background Image */}
+      <Title title="Testimonial" subTitle="What our client say about us" />
       <div
         className="absolute inset-0 bg-cover bg-center "
         style={{
@@ -52,10 +53,7 @@ const Testimonial = () => {
         }}
       ></div>
 
-      <div className="relative z-10 max-w-6xl mx-auto px-4">
-        <h2 className="text-primary text-center pb-8">
-          What Our Customers Say
-        </h2>
+      <div data-aos="fade-up" className="relative z-10 max-w-6xl mx-auto px-4">
         {/* Swiper Carousel */}
         <Swiper
           spaceBetween={30}
