@@ -5,11 +5,13 @@ import About from "../page/ui/about/About";
 import Contact from "../page/ui/contact/Contact";
 import Login from "../page/ui/login/Login";
 import Register from "../page/ui/login/Register";
+import Error from "../page/ui/error/Error";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
+    errorElement: <Error />,
     children: [
       {
         path: "/",

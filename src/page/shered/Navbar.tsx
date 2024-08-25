@@ -65,12 +65,12 @@ const Navbar = () => {
             <Link to={"/login"} className="text-[#4cbfb0] mr-4 font-bold">
               Login
             </Link>
-            <a
-              href="#signup"
+            <Link
+              to={"/sign-up"}
               className="inline-block px-4 py-2 text-white bg-[#4cbfb0] rounded-lg "
             >
               Sign Up Now
-            </a>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}

@@ -42,8 +42,10 @@ const Register = () => {
         </div>
       </div>
 
-      <div className="absolute md:top-14 md:right-52 top-40 md:h-[700px] p-5 md:w-[450px] w-[400px] ml-8 bg-white bg-opacity-90 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold text-center mb-4">Register</h2>
+      <div className="absolute md:top-14 md:right-32 top-40 md:h-[700px] p-5 md:w-[600px] w-[400px] ml-8 bg-white rounded-lg shadow-lg">
+        <h2 className="text-2xl font-bold text-[#062132] text-center mb-4">
+          Create a free account now
+        </h2>
         <form>
           <div className="flex justify-between mb-4">
             <div className="w-1/2 pr-2">
