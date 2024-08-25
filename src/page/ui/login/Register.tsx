@@ -2,9 +2,11 @@ import { FaCheckCircle } from "react-icons/fa";
 import { FaFacebook, FaGoogle } from "react-icons/fa6";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../../assets/Abstract_ball_globe_icons_logo_template-removebg-preview.png";
-const Login = () => {
+
+const Register = () => {
   return (
     <div className="relative h-screen bg-[#dbf2ef]">
+      {/* Background Image */}
       <div
         className="h-[60%] bg-cover bg-center"
         style={{
@@ -13,9 +15,10 @@ const Login = () => {
         }}
       ></div>
 
-      <div className="absolute md:top-14 md:left-52 top-8 left-44 md:h-[500px]  p-5 md:w-[450px]  ">
+      {/* Why Choose Us Section */}
+      <div className="absolute md:top-14 md:left-52 top-8 left-44 md:h-[500px] p-5 md:w-[450px]">
         <div className="flex-shrink-0">
-          <NavLink to="/" className=" text-2xl font-bold">
+          <NavLink to="/" className="text-2xl font-bold">
             <img src={logo} className="h-24 w-24 rounded-full" alt="" />
           </NavLink>
         </div>
@@ -39,9 +42,41 @@ const Login = () => {
         </div>
       </div>
 
-      <div className="absolute md:top-14 md:right-52 top-40 md:h-[550px]  p-5 md:w-[450px] w-[400px] ml-8 bg-white bg-opacity-90 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold text-center mb-4">Login</h2>
+      <div className="absolute md:top-14 md:right-52 top-40 md:h-[700px] p-5 md:w-[450px] w-[400px] ml-8 bg-white bg-opacity-90 rounded-lg shadow-lg">
+        <h2 className="text-2xl font-bold text-center mb-4">Register</h2>
         <form>
+          <div className="flex justify-between mb-4">
+            <div className="w-1/2 pr-2">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="firstName"
+              >
+                First Name
+              </label>
+              <input
+                id="firstName"
+                type="text"
+                placeholder="First Name"
+                className="w-full px-3 py-2 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              />
+            </div>
+            <div className="w-1/2 pl-2">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="lastName"
+              >
+                Last Name
+              </label>
+              <input
+                id="lastName"
+                type="text"
+                placeholder="Last Name"
+                className="w-full px-3 py-2 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              />
+            </div>
+          </div>
+
+          {/* Username Field */}
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
@@ -56,7 +91,9 @@ const Login = () => {
               className="w-full px-3 py-2 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
             />
           </div>
-          <div className="mb-6">
+
+          {/* Password Field */}
+          <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="password"
@@ -70,14 +107,36 @@ const Login = () => {
               className="w-full px-3 py-2 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
             />
           </div>
+
+          {/* Confirm Password Field */}
+          <div className="mb-6">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="confirmPassword"
+            >
+              Confirm Password
+            </label>
+            <input
+              id="confirmPassword"
+              type="password"
+              placeholder="Confirm your password"
+              className="w-full px-3 py-2 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+            />
+          </div>
+
+          {/* Login Button */}
           <button type="submit" className="btn-primary w-full">
-            Login
+            Register
           </button>
+
+          {/* Divider with "OR" */}
           <div className="my-6 flex items-center justify-center">
             <span className="w-full h-px bg-gray-300"></span>
             <span className="mx-4 text-gray-500">OR</span>
             <span className="w-full h-px bg-gray-300"></span>
           </div>
+
+          {/* Social Login Buttons */}
           <div className="flex flex-col space-y-4 mb-6">
             <button className="flex items-center justify-center w-full bg-white border border-gray-300 rounded py-2 hover:bg-gray-100">
               <FaGoogle className="text-red-500 mr-2" />
@@ -91,12 +150,12 @@ const Login = () => {
 
           {/* Sign Up Section */}
           <div className="text-center flex items-center justify-center">
-            <p className="text-gray-600">New here?</p>
+            <p className="text-gray-600">Already have an account?</p>
             <Link
-              to="/sign-up"
+              to="/login"
               className="text-[#4cbfb0] font-bold hover:underline ml-2"
             >
-              Sign Up
+              Login
             </Link>
           </div>
         </form>
@@ -105,4 +164,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
