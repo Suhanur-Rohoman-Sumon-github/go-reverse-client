@@ -6,6 +6,7 @@ import Contact from "../page/ui/contact/Contact";
 import Login from "../page/ui/login/Login";
 import Register from "../page/ui/login/Register";
 import Error from "../page/ui/error/Error";
+import DashBoardLayout from "../layouts/DashBoardLayout";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
   {
     path: "/sign-up",
     element: <Register />,
+  },
+  {
+    path: "/dashboard",
+    element: <DashBoardLayout />,
   },
 ]);
 
