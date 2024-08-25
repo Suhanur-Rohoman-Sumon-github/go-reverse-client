@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import logo from "../../assets/Abstract_ball_globe_icons_logo_template-removebg-preview.png";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -62,9 +62,9 @@ const Navbar = () => {
 
           {/* Action Button */}
           <div className="hidden md:block">
-            <a href="#contact" className="text-[#4cbfb0] mr-4 font-bold">
+            <Link to={"/login"} className="text-[#4cbfb0] mr-4 font-bold">
               Login
-            </a>
+            </Link>
             <a
               href="#signup"
               className="inline-block px-4 py-2 text-white bg-[#4cbfb0] rounded-lg "
