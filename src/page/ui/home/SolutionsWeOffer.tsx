@@ -1,4 +1,5 @@
 import Title from "../../../componnets/ui/Title";
+import Aos from "../../../hooks/Aos";
 
 const SolutionsWeOffer = () => {
   // Static data for service cards
@@ -61,6 +62,7 @@ const SolutionsWeOffer = () => {
   return (
     <div className="">
       <Title title="Our soloutions" subTitle="our top most soluctions" />
+      <Aos />
       <div
         data-aos="zoom-in-left"
         className="grid grid-cols-1 md:grid-cols-4 gap-6"

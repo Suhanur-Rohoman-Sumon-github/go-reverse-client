@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./dashboard.css";
 
-import { Layout, theme } from "antd";
+import { Layout } from "antd";
 import { Outlet } from "react-router-dom";
 
 import DashBoardSidbar from "../componnets/Dashboard/ui/DashBoardSidbar";
@@ -10,10 +10,6 @@ const { Content } = Layout;
 
 const DashBoardLayout: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
-
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
 
   return (
     <Layout style={{ height: "100vh" }}>
@@ -25,8 +21,6 @@ const DashBoardLayout: React.FC = () => {
             margin: "24px 16px",
             padding: 24,
             minHeight: 280,
-            background: colorBgContainer,
-            borderRadius: borderRadiusLG,
           }}
         >
           <Outlet />

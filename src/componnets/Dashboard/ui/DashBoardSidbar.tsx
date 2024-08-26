@@ -4,6 +4,7 @@ import { BsHouses, BsHouseUpFill } from "react-icons/bs";
 import logo from "../../../assets/Abstract_ball_globe_icons_logo_template-removebg-preview.png";
 import { SiSimpleanalytics } from "react-icons/si";
 import { Button, Menu, Tooltip } from "antd";
+import { Link } from "react-router-dom";
 const DashBoardSidbar = ({ collapsed }: { collapsed: boolean }) => {
   const [selectedKey, setSelectedKey] = useState<string>("1");
 
@@ -32,7 +33,9 @@ const DashBoardSidbar = ({ collapsed }: { collapsed: boolean }) => {
       collapsed={collapsed}
     >
       <div className="demo-logo-vertical">
-        <img src={logo} className="h-full w-full" alt="Logo" />
+        <Link to={"/"}>
+          <img src={logo} className="h-full w-full" alt="Logo" />
+        </Link>
       </div>
       <div>
         <Button

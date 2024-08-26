@@ -1,10 +1,11 @@
 import Title from "../../../componnets/ui/Title";
+import Aos from "../../../hooks/Aos";
 
 const OurProducts = () => {
   return (
     <div className=" mt-28">
       <Title title="Our Products" subTitle="service we provide" />
-
+      <Aos />
       <div className=" flex flex-col md:flex-row items-center justify-between  mx-auto  rounded-lg overflow-hidden">
         <div data-aos="fade-right" className="w-full md:w-[40%] mb-6 md:mb-0">
           <img

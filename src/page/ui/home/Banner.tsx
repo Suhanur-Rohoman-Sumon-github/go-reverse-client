@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import Aos from "../../../hooks/Aos";
 
 const Banner = () => {
   useEffect(() => {
@@ -12,6 +13,7 @@ const Banner = () => {
           "url('https://vizmo.in/_nuxt/img/home_illustration.c546130.svg')",
       }}
     >
+      <Aos />
       <div
         data-aos="fade-down"
         className="relative z-10 text-center text-[#062132] px-4 top-40 "

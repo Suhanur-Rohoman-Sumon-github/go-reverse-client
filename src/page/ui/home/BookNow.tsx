@@ -1,7 +1,9 @@
+import Aos from "../../../hooks/Aos";
+
 const BookNow = () => {
   return (
     <div className=" my-5 flex flex-col-reverse md:flex-row items-center justify-between  mx-auto  rounded-lg overflow-hidden bg-[#f2f9fa]">
-      {/* Text Content */}
+      <Aos />
       <div
         data-aos="fade-up-right"
         className="max-w-4xl mx-auto md:w-[75%] text-white md:pl-8"

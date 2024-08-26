@@ -3,7 +3,6 @@ import { Header } from "antd/es/layout/layout";
 import React from "react";
 import { FaMessage, FaUser } from "react-icons/fa6";
 import { IoIosNotifications } from "react-icons/io";
-import { MdDarkMode } from "react-icons/md";
 import { Link, useLocation } from "react-router-dom";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 type DashBoardHeaderProps = {
@@ -51,15 +50,18 @@ const DashBoardHeader = ({ collapsed, setCollapsed }: DashBoardHeaderProps) => {
             onClick={() => setCollapsed(!collapsed)}
             style={{
               fontSize: "16px",
-              width: 64,
-              height: 64,
+              width: 84,
+              height: 84,
+              color: "#4cbfb0",
             }}
           />
           <div className="hidden md:block">
             <Breadcrumb>
               {breadcrumbItems.map((breadcrumb, index) => (
                 <Breadcrumb.Item key={index}>
-                  <Link to={breadcrumb.path}>{breadcrumb.title}</Link>
+                  <Link to={breadcrumb.path}>
+                    <p className="text-[#4cbfb0]">{breadcrumb.title}</p>
+                  </Link>
                 </Breadcrumb.Item>
               ))}
             </Breadcrumb>
@@ -68,10 +70,16 @@ const DashBoardHeader = ({ collapsed, setCollapsed }: DashBoardHeaderProps) => {
 
         {/* Right side of the header */}
         <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-          <h1 style={{ margin: 0 }}>Hi</h1>
-          <MdDarkMode style={{ fontSize: "20px", cursor: "pointer" }} />
-          <FaMessage style={{ fontSize: "20px", cursor: "pointer" }} />
-          <IoIosNotifications style={{ fontSize: "20px", cursor: "pointer" }} />
+          <FaMessage
+            style={{ fontSize: "30px", cursor: "pointer", color: "#4cbfb0" }}
+          />
+          <IoIosNotifications
+            style={{
+              fontSize: "30px",
+              cursor: "pointer",
+              color: "#4cbfb0",
+            }}
+          />
           <div>
             <Tooltip placement="right" title="John Doe">
               <Dropdown

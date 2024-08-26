@@ -4,6 +4,7 @@ import "swiper/css/navigation";
 
 import { Autoplay } from "swiper/modules";
 import Title from "../../../componnets/ui/Title";
+import Aos from "../../../hooks/Aos";
 
 const Testimonial = () => {
   // Example reviews data
@@ -45,6 +46,7 @@ const Testimonial = () => {
   return (
     <div className="relative bg-[#dbf2ef] py-16 mb-4">
       <Title title="Testimonial" subTitle="What our client say about us" />
+      <Aos />
       <div
         className="absolute inset-0 bg-cover bg-center "
         style={{

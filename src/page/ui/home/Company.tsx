@@ -1,9 +1,11 @@
 import Title from "../../../componnets/ui/Title";
+import Aos from "../../../hooks/Aos";
 
 const Company = () => {
   return (
     <div>
       <div className="">
+        <Aos />
         <div data-aos="fade-up">
           <Title
             title="Our happy clients"

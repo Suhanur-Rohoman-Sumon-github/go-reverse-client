@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FiPlus } from "react-icons/fi";
 import { FaMinus } from "react-icons/fa6";
 import Title from "../../../componnets/ui/Title";
+import Aos from "../../../hooks/Aos";
 
 const Faq = () => {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
@@ -68,6 +69,7 @@ const Faq = () => {
         title="Frequently asked questions"
         subTitle="All the question do you have"
       />
+      <Aos />
       <div data-aos="fade-up" className="space-y-4">
         {faqs.map((faq, index) => (
           <div key={faq.id} className=" border rounded-lg">

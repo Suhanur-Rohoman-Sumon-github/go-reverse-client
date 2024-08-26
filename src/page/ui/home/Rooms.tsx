@@ -1,4 +1,5 @@
 import Title from "../../../componnets/ui/Title";
+import Aos from "../../../hooks/Aos";
 
 const Rooms = () => {
   const rooms = [
@@ -55,7 +56,7 @@ const Rooms = () => {
     <div className="py-16 ">
       <div className="">
         <Title title="Most popular rooms" subTitle="our most visited rooms" />
-        {/* Grid layout for the cards */}
+        <Aos />
         <div
           data-aos="flip-left"
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
