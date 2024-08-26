@@ -14,7 +14,6 @@ const DashBoardHeader = ({ collapsed, setCollapsed }: DashBoardHeaderProps) => {
   const generateBreadcrumbItems = () => {
     const pathnames = pathname.split("/").filter((x) => x);
     return [
-      { title: "Dashboard", path: "/dashboard" },
       ...pathnames.map((value, index) => {
         const url = `/${pathnames.slice(0, index + 1).join("/")}`;
         return { title: value, path: url };

@@ -7,7 +7,8 @@ import Login from "../page/ui/login/Login";
 import Register from "../page/ui/login/Register";
 import Error from "../page/ui/error/Error";
 import DashBoardLayout from "../layouts/DashBoardLayout";
-import CreateRoom from "../page/Dashboard/admin/CreateRoom";
+
+import { adminPaths } from "./adminroute";
 
 const router = createBrowserRouter([
   {
@@ -30,23 +31,22 @@ const router = createBrowserRouter([
     ],
   },
   {
+    path: "/admin",
+    element: <DashBoardLayout />,
+    children: adminPaths,
+  },
+  {
+    path: "/user",
+    element: <DashBoardLayout />,
+    children: adminPaths,
+  },
+  {
     path: "/login",
     element: <Login />,
   },
   {
     path: "/sign-up",
     element: <Register />,
-  },
-  {
-    path: "/dashboard",
-    element: <DashBoardLayout />,
-
-    children: [
-      {
-        path: "create-room",
-        element: <CreateRoom />,
-      },
-    ],
   },
 ]);
 

@@ -1,25 +1,12 @@
 import Sider from "antd/es/layout/Sider";
 import { useState } from "react";
-import { BsHouses, BsHouseUpFill } from "react-icons/bs";
-import logo from "../../../assets/Abstract_ball_globe_icons_logo_template-removebg-preview.png";
-import { SiSimpleanalytics } from "react-icons/si";
-import { Button, Menu, Tooltip } from "antd";
+import { Menu } from "antd";
 import { Link } from "react-router-dom";
-const DashBoardSidbar = ({ collapsed }: { collapsed: boolean }) => {
-  const [selectedKey, setSelectedKey] = useState<string>("1");
+import logo from "../../../assets/Abstract_ball_globe_icons_logo_template-removebg-preview.png";
+import adminSidebar from "../../../routes/adminroute"; // Correctly import the sidebar function
 
-  const items = [
-    {
-      key: "1",
-      icon: <BsHouseUpFill style={{ fontSize: "24px" }} />,
-      label: "Create Room",
-    },
-    {
-      key: "2",
-      icon: <BsHouses style={{ fontSize: "24px" }} />,
-      label: "Rooms Details",
-    },
-  ];
+const DashBoardSidbar = ({ collapsed }: { collapsed: boolean }) => {
+  const [selectedKey, setSelectedKey] = useState<string>("dashboard");
 
   const handleMenuClick = (e: { key: string }) => {
     setSelectedKey(e.key);
@@ -37,22 +24,7 @@ const DashBoardSidbar = ({ collapsed }: { collapsed: boolean }) => {
           <img src={logo} className="h-full w-full" alt="Logo" />
         </Link>
       </div>
-      <div>
-        <Button
-          className="w-full mb-4"
-          icon={<SiSimpleanalytics />}
-          style={{
-            display: "flex",
-            marginLeft: collapsed ? "24px" : "0px",
-            alignItems: "center",
-            backgroundColor: "#4cbfb0",
-            color: "white",
-            border: "none",
-          }}
-        >
-          {!collapsed && "Dashboard"}
-        </Button>
-      </div>
+
       <Menu
         style={{
           fontSize: "larger",
@@ -61,22 +33,16 @@ const DashBoardSidbar = ({ collapsed }: { collapsed: boolean }) => {
         mode="inline"
         selectedKeys={[selectedKey]}
         onClick={handleMenuClick}
-        items={items.map((item) => ({
+        items={adminSidebar(collapsed).map((item) => ({
           key: item.key,
-          icon: collapsed ? (
-            <Tooltip placement="right" title={item.label}>
-              {item.icon}
-            </Tooltip>
-          ) : (
-            item.icon
-          ),
-          label: !collapsed ? item.label : undefined,
+          icon: item.icon,
+          label: item.label,
           style: {
             backgroundColor: selectedKey === item.key ? "#4cbfb0" : undefined,
             color: selectedKey === item.key ? "white" : undefined,
             display: "flex",
             alignItems: "center",
-            margin: " 16px 0",
+            margin: "16px 0",
           },
         }))}
       />
