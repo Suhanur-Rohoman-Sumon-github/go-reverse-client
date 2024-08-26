@@ -7,6 +7,7 @@ import Login from "../page/ui/login/Login";
 import Register from "../page/ui/login/Register";
 import Error from "../page/ui/error/Error";
 import DashBoardLayout from "../layouts/DashBoardLayout";
+import CreateRoom from "../page/Dashboard/admin/CreateRoom";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,13 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <DashBoardLayout />,
+
+    children: [
+      {
+        path: "create-room",
+        element: <CreateRoom />,
+      },
+    ],
   },
 ]);
 

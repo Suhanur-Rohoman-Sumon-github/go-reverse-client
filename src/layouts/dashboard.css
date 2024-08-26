@@ -1,0 +1,13 @@
+.ant-menu-item-selected {
+  background-color: #f3f4f6 !important;
+  color: #4cbfb0 !important;
+}
+
+.ant-menu-item-selected .anticon {
+  color: #062132 !important;
+}
+
+.ant-menu-item:hover {
+  background-color: #f3f4f6 !important;
+  color: #062132 !important;
+}
