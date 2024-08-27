@@ -5,11 +5,14 @@ import { FaMessage, FaUser } from "react-icons/fa6";
 import { IoIosNotifications } from "react-icons/io";
 import { Link, useLocation } from "react-router-dom";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import { useAppDispatch } from "../../../redux/hook";
+import { logOut } from "../../../redux/fetures/auth/auth.slice";
 type DashBoardHeaderProps = {
   collapsed: boolean;
   setCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
 };
 const DashBoardHeader = ({ collapsed, setCollapsed }: DashBoardHeaderProps) => {
+  const dispatch = useAppDispatch();
   const { pathname } = useLocation();
   const generateBreadcrumbItems = () => {
     const pathnames = pathname.split("/").filter((x) => x);
@@ -22,13 +25,18 @@ const DashBoardHeader = ({ collapsed, setCollapsed }: DashBoardHeaderProps) => {
   };
 
   const breadcrumbItems = generateBreadcrumbItems();
+  const handleLogout = () => {
+    dispatch(logOut());
+  };
   const menuItems = (
     <Menu>
       <Menu.Item key="profile">
         <Button type="text">Profile</Button>
       </Menu.Item>
       <Menu.Item key="logout">
-        <Button type="text">Logout</Button>
+        <Button onClick={handleLogout} type="text">
+          Logout
+        </Button>
       </Menu.Item>
     </Menu>
   );

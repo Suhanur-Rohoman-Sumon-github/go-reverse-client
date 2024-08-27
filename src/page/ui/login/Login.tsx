@@ -1,39 +1,43 @@
-import { useForm, SubmitHandler } from "react-hook-form";
 import { FaFacebook, FaGoogle } from "react-icons/fa6";
 import { useLoginMutation } from "../../../redux/fetures/auth/authApi";
 import Background from "../../../componnets/ui/login/Background";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../../redux/hook";
-import { setUser } from "../../../redux/fetures/auth/auth.slice";
+import { setUser, TUser } from "../../../redux/fetures/auth/auth.slice";
 import { verifyToken } from "../../../utils/verifyToken";
-
-type FormValues = {
-  email: string;
-  password: string;
-};
+import { toast } from "sonner";
+import CustomForm from "../../../componnets/form/CustomForm";
+import CustomInput from "../../../componnets/form/CustomInput";
+import { FormEventHandler } from "react";
 
 const Login = () => {
   const [login] = useLoginMutation();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      email: "jodfhb.doe@example.com",
-      password: "PlainTextPassword",
-    },
-  });
-
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+  const onSubmit = async (data: FormEventHandler) => {
+    const tostId = toast.loading("user log ing  ");
     console.log(data);
-    const res = await login(data).unwrap();
+    try {
+      const res = await login(data).unwrap();
 
-    const user = verifyToken(res.token);
-    console.log(user);
-    dispatch(setUser({ user: user, token: res.token }));
+      const user = verifyToken(res.token) as TUser;
+      console.log(user);
+      dispatch(setUser({ user: user, token: res.token }));
+      toast.success("user login successfully", { id: tostId, duration: 2000 });
+      navigate(`/${user.role}/dashboard`);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (err) {
+      toast.error("something went wrong", {
+        id: tostId,
+        duration: 2000,
+      });
+    }
+  };
+
+  const defaultValues = {
+    email: "jodfhb.doe@example.com",
+    password: "PlainTextPassword",
   };
 
   return (
@@ -42,52 +46,22 @@ const Login = () => {
 
       <div className="absolute md:top-24 md:right-32 top-40 md:h-[550px] p-5 md:w-[600px] w-[400px] ml-8 bg-white bg-opacity-90 rounded-lg shadow-lg">
         <h2 className="text-2xl font-bold text-center mb-4">Login</h2>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <CustomForm onSubmit={onSubmit} defaultValues={defaultValues}>
           <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="username"
-            >
-              Email
-            </label>
-            <input
-              id="email"
-              type="text"
-              placeholder="Enter your email"
-              {...register("email", { required: "Email is required" })}
-              className="w-full px-3 py-2 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+            <CustomInput
+              name={"email"}
+              placeholder={"enter your email"}
+              type={"email"}
+              label={"Email"}
             />
-            {errors.email && (
-              <p className="text-red-500 text-xs mt-1">
-                {errors.email.message}
-              </p>
-            )}
           </div>
           <div className="mb-6">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="password"
-            >
-              Password
-            </label>
-            <input
-              id="password"
-              type="password"
-              placeholder="Enter your password"
-              {...register("password", {
-                required: "Password is required",
-                minLength: {
-                  value: 6,
-                  message: "Password must be at least 6 characters",
-                },
-              })}
-              className="w-full px-3 py-2 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+            <CustomInput
+              name={"password"}
+              placeholder={"enter your password"}
+              type={"password"}
+              label={"password"}
             />
-            {errors.password && (
-              <p className="text-red-500 text-xs mt-1">
-                {errors.password.message}
-              </p>
-            )}
           </div>
           <button type="submit" className="btn-primary w-full">
             Login
@@ -118,7 +92,7 @@ const Login = () => {
               Sign Up
             </Link>
           </div>
-        </form>
+        </CustomForm>
       </div>
     </div>
   );

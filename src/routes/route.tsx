@@ -10,6 +10,8 @@ import DashBoardLayout from "../layouts/DashBoardLayout";
 
 import { adminPaths } from "./adminroute";
 import Room from "../page/ui/rooms/Room";
+import ProtectedRoute from "./protectedRoute/ProtectedRoute";
+import { userPaths } from "./userRoute";
 
 const router = createBrowserRouter([
   {
@@ -37,13 +39,21 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <DashBoardLayout />,
+    element: (
+      <ProtectedRoute>
+        <DashBoardLayout />
+      </ProtectedRoute>
+    ),
     children: adminPaths,
   },
   {
     path: "/user",
-    element: <DashBoardLayout />,
-    children: adminPaths,
+    element: (
+      <ProtectedRoute>
+        <DashBoardLayout />
+      </ProtectedRoute>
+    ),
+    children: userPaths,
   },
   {
     path: "/login",

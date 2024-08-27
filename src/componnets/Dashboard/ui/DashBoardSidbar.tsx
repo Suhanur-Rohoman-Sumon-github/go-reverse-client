@@ -1,16 +1,54 @@
 import Sider from "antd/es/layout/Sider";
-import { useState } from "react";
 import { Menu } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom"; // Import useLocation
 import logo from "../../../assets/Abstract_ball_globe_icons_logo_template-removebg-preview.png";
-import adminSidebar from "../../../routes/adminroute"; // Correctly import the sidebar function
+import { sidebarItemsGenerator } from "../../../utils/sidebarItemGenaretor";
+import { adminPaths } from "../../../routes/adminroute";
+import { useAppSelector } from "../../../redux/hook";
+import { currentUser } from "../../../redux/fetures/auth/auth.slice";
+import { userPaths } from "../../../routes/userRoute";
 
 const DashBoardSidbar = ({ collapsed }: { collapsed: boolean }) => {
-  const [selectedKey, setSelectedKey] = useState<string>("dashboard");
+  const location = useLocation();
+  const user = useAppSelector(currentUser);
 
-  const handleMenuClick = (e: { key: string }) => {
-    setSelectedKey(e.key);
-  };
+  const selectedKey = location.pathname.split("/").filter(Boolean).pop() || "";
+
+  let sidebarItem;
+  switch (user!.role) {
+    case "admin":
+      sidebarItem = sidebarItemsGenerator(adminPaths, collapsed).map(
+        (item) => ({
+          key: item.key,
+          icon: item.icon,
+          label: item.label,
+          style: {
+            backgroundColor: selectedKey === item.path ? "#4cbfb0" : undefined,
+            color: selectedKey === item.path ? "white" : undefined,
+            display: "flex",
+            alignItems: "center",
+            margin: "16px 0",
+          },
+        })
+      );
+      break;
+    case "user":
+      sidebarItem = sidebarItemsGenerator(userPaths, collapsed).map((item) => ({
+        key: item.key,
+        icon: item.icon,
+        label: item.label,
+        style: {
+          backgroundColor: selectedKey === item.key ? "#4cbfb0" : "",
+          color: selectedKey === item.key ? "white" : "",
+          display: "flex",
+          alignItems: "center",
+          margin: "16px 0",
+        },
+      }));
+      break;
+    default:
+      break;
+  }
 
   return (
     <Sider
@@ -32,19 +70,7 @@ const DashBoardSidbar = ({ collapsed }: { collapsed: boolean }) => {
         }}
         mode="inline"
         selectedKeys={[selectedKey]}
-        onClick={handleMenuClick}
-        items={adminSidebar(collapsed).map((item) => ({
-          key: item.key,
-          icon: item.icon,
-          label: item.label,
-          style: {
-            backgroundColor: selectedKey === item.key ? "#4cbfb0" : undefined,
-            color: selectedKey === item.key ? "white" : undefined,
-            display: "flex",
-            alignItems: "center",
-            margin: "16px 0",
-          },
-        }))}
+        items={sidebarItem}
       />
     </Sider>
   );
