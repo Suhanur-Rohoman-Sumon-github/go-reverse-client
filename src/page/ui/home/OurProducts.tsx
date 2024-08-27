@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Title from "../../../componnets/ui/Title";
 import Aos from "../../../hooks/Aos";
 
@@ -20,18 +21,18 @@ const OurProducts = () => {
           data-aos="fade-left"
           className="w-full md:w-[60%] text-white md:pl-8"
         >
-          <h2 className="text-primary">Explore Our Products</h2>
+          <h2 className="text-primary">Book Your QR Code Solution Today</h2>
           <p className="text-secondary">
-            Discover a variety of high-quality products crafted to meet your
-            needs. Browse through our collection and find the perfect item for
-            you.
+            Don’t miss out on the opportunity to upgrade your business with our
+            efficient QR code solutions. Book now to streamline your operations
+            and enhance customer interactions with cutting-edge technology.
           </p>
-          <a
-            href="#products"
+          <Link
+            to={"/rooms"}
             className="inline-block bg-[#4cbfb0] hover:bg-[#3ea592] text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition duration-300"
           >
-            Shop Now
-          </a>
+            Book Now
+          </Link>
         </div>
       </div>
       <div
@@ -39,20 +40,20 @@ const OurProducts = () => {
         className=" flex flex-col-reverse md:flex-row items-center justify-between  mx-auto  rounded-lg overflow-hidden"
       >
         <div className="w-full md:w-[60%] text-white md:pl-8">
-          <h2 className="text-primary">Explore Our Products</h2>
+          <h2 className="text-primary">Reserve Your Ergonomic Desk</h2>
           <p className="text-secondary">
-            Discover a variety of high-quality products crafted to meet your
-            needs. Browse through our collection and find the perfect item for
-            you.
+            Ensure your workspace is equipped with the best in ergonomic design.
+            Book your desk now to enjoy comfort and productivity, whether at the
+            office or in your home setup.
           </p>
-          <a
-            href="#products"
+          <Link
+            to={"/rooms"}
             className="inline-block bg-[#4cbfb0] hover:bg-[#3ea592] text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition duration-300"
           >
-            Shop Now
-          </a>
+            Book Now
+          </Link>
         </div>
-        {/* Image Container */}
+
         <div data-aos="flip-left" className="w-full md:w-[40%] mb-6 md:mb-0">
           <img
             src="https://vizmo.in/_nuxt/img/desks-product.f7af245.svg"
@@ -62,7 +63,6 @@ const OurProducts = () => {
         </div>
       </div>
       <div className=" flex flex-col md:flex-row items-center justify-between  mx-auto  rounded-lg overflow-hidden">
-        {/* Image Container */}
         <div
           data-aos="fade-down-right"
           className="w-full md:w-[40%] mb-6 md:mb-0"
@@ -74,23 +74,22 @@ const OurProducts = () => {
           />
         </div>
 
-        {/* Text Content */}
         <div
           data-aos="fade-down-left"
           className="w-full md:w-[60%] text-white md:pl-8"
         >
-          <h2 className="text-primary">Explore Our Products</h2>
+          <h2 className="text-primary">Schedule Your Meeting Room Setup</h2>
           <p className="text-secondary">
-            Discover a variety of high-quality products crafted to meet your
-            needs. Browse through our collection and find the perfect item for
-            you.
+            Optimize your meeting space with our advanced solutions. Book now to
+            enhance your collaborative efforts and create an environment that's
+            perfect for productive meetings and effective communication.
           </p>
-          <a
-            href="#products"
+          <Link
+            to={"/rooms"}
             className="inline-block bg-[#4cbfb0] hover:bg-[#3ea592] text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition duration-300"
           >
-            Shop Now
-          </a>
+            Book Now
+          </Link>
         </div>
       </div>
     </div>

@@ -9,6 +9,7 @@ import Error from "../page/ui/error/Error";
 import DashBoardLayout from "../layouts/DashBoardLayout";
 
 import { adminPaths } from "./adminroute";
+import Room from "../page/ui/rooms/Room";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: "/contact",
         element: <Contact />,
+      },
+      {
+        path: "/rooms",
+        element: <Room />,
       },
     ],
   },

@@ -1,60 +1,67 @@
-import { FaCheckCircle } from "react-icons/fa";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { FaFacebook, FaGoogle } from "react-icons/fa6";
-import { Link, NavLink } from "react-router-dom";
-import logo from "../../../assets/Abstract_ball_globe_icons_logo_template-removebg-preview.png";
+import { useLoginMutation } from "../../../redux/fetures/auth/authApi";
+import Background from "../../../componnets/ui/login/Background";
+import { Link } from "react-router-dom";
+import { useAppDispatch } from "../../../redux/hook";
+import { setUser } from "../../../redux/fetures/auth/auth.slice";
+import { verifyToken } from "../../../utils/verifyToken";
+
+type FormValues = {
+  email: string;
+  password: string;
+};
+
 const Login = () => {
+  const [login] = useLoginMutation();
+  const dispatch = useAppDispatch();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      email: "jodfhb.doe@example.com",
+      password: "PlainTextPassword",
+    },
+  });
+
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    console.log(data);
+    const res = await login(data).unwrap();
+
+    const user = verifyToken(res.token);
+    console.log(user);
+    dispatch(setUser({ user: user, token: res.token }));
+  };
+
   return (
-    <div className="relative h-screen bg-[#dbf2ef]">
-      <div
-        className="h-[60%] bg-cover bg-center"
-        style={{
-          backgroundImage:
-            "url('https://vizmo.in/_nuxt/img/quote-revised.cc78def.svg')",
-        }}
-      ></div>
+    <div className="relative ">
+      <Background />
 
-      <div className="absolute md:top-14 md:left-52 top-8 left-44 md:h-[500px]  p-5 md:w-[450px]  ">
-        <div className="flex-shrink-0">
-          <NavLink to="/" className=" text-2xl font-bold">
-            <img src={logo} className="h-24 w-24 rounded-full" alt="" />
-          </NavLink>
-        </div>
-
-        <h1 className="text-[#062132] my-4 font-bold text-2xl hidden md:block">
-          Why choose us for your event ticketing?
-        </h1>
-
-        <div className="space-y-4 max-w-xl hidden md:block">
-          {[
-            "High-quality service",
-            "Experienced professionals",
-            "24/7 customer support",
-            "Affordable pricing",
-          ].map((text, index) => (
-            <div key={index} className="flex items-center">
-              <FaCheckCircle className="text-green-500 mr-2" />
-              <p className="text-gray-700">{text}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="absolute md:top-24 md:right-32 top-40 md:h-[550px]  p-5 md:w-[600px] w-[400px] ml-8 bg-white bg-opacity-90 rounded-lg shadow-lg">
+      <div className="absolute md:top-24 md:right-32 top-40 md:h-[550px] p-5 md:w-[600px] w-[400px] ml-8 bg-white bg-opacity-90 rounded-lg shadow-lg">
         <h2 className="text-2xl font-bold text-center mb-4">Login</h2>
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="username"
             >
-              Username
+              Email
             </label>
             <input
-              id="username"
+              id="email"
               type="text"
-              placeholder="Enter your username"
+              placeholder="Enter your email"
+              {...register("email", { required: "Email is required" })}
               className="w-full px-3 py-2 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
             />
+            {errors.email && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.email.message}
+              </p>
+            )}
           </div>
           <div className="mb-6">
             <label
@@ -67,8 +74,20 @@ const Login = () => {
               id="password"
               type="password"
               placeholder="Enter your password"
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 6,
+                  message: "Password must be at least 6 characters",
+                },
+              })}
               className="w-full px-3 py-2 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
             />
+            {errors.password && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.password.message}
+              </p>
+            )}
           </div>
           <button type="submit" className="btn-primary w-full">
             Login

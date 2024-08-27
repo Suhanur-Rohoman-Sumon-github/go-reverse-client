@@ -16,7 +16,7 @@ body {
   @apply inline-block bg-[#4cbfb0] text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition duration-300;
 }
 .text-banner {
-  @apply text-4xl md:text-6xl font-bold mb-4;
+  @apply text-4xl md:text-6xl font-bold mb-4 text-[#062132];
 }
 .text-primary {
   @apply text-4xl  font-bold mb-4 text-[#062132];

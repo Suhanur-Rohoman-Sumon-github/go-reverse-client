@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import Aos from "../../../hooks/Aos";
+import { Link } from "react-router-dom";
 
 const Banner = () => {
   useEffect(() => {
@@ -18,13 +19,13 @@ const Banner = () => {
         data-aos="fade-down"
         className="relative z-10 text-center text-[#062132] px-4 top-40 "
       >
-        <h1 className="text-banner">Welcome to Our Booking Website</h1>
+        <h1 className="text-banner">Book Your Dream Getaway Today</h1>
         <p className="text-secondary">
           Discover amazing places and book your next adventure with us!
         </p>
-        <a href="#booknow" className="btn-primary">
+        <Link to={"/rooms"} className="btn-primary">
           Book Now
-        </a>
+        </Link>
       </div>
     </div>
   );
