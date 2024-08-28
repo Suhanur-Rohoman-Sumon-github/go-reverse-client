@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Row, Col, Card } from "antd";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
@@ -19,14 +20,11 @@ const slotResolver = z.object({
 const CreateSlots = () => {
   const [createSlots] = useCreateSlotsMutation();
   const { data: roomData } = useGetAllRoomsQuery(undefined);
-  console.log(roomData);
+
   const onSubmit = (data: any) => {
-    // Handle form submission here
-    console.log(data);
     createSlots(data);
   };
 
-  // Sample room options and date format for selection (if needed)
   const roomOptions =
     roomData?.map((room) => ({
       value: room._id,
@@ -65,20 +63,6 @@ const CreateSlots = () => {
               name="endTime"
               placeholder="Enter end time (HH:MM)"
               type="time"
-            />
-          </Col>
-        </Row>
-
-        <Row gutter={16}>
-          <Col span={24}>
-            <CustomSelect
-              options={[
-                { value: true, label: "Booked" },
-                { value: false, label: "Available" },
-              ]}
-              name="isBooked"
-              label="Booking Status"
-              placeholder="Select booking status"
             />
           </Col>
         </Row>

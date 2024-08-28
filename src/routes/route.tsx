@@ -13,6 +13,7 @@ import Room from "../page/ui/rooms/Room";
 import ProtectedRoute from "./protectedRoute/ProtectedRoute";
 import { userPaths } from "./userRoute";
 import SingleRoom from "../page/ui/rooms/SingleRoom";
+import Checkout from "../page/ui/checkout/Checkout";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
       {
         path: "/rooms/:roomId",
         element: <SingleRoom />,
+      },
+      {
+        path: "checkout",
+        element: <Checkout />,
       },
     ],
   },

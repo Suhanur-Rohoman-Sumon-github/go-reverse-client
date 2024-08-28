@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useGetSingleRoomQuery } from "../../../redux/fetures/rooms/rooms.api";
 import { useGetAllSlotsQuery } from "../../../redux/fetures/slots/slots.api";
 import moment from "moment";
@@ -184,17 +184,19 @@ const SingleRoom = () => {
           </p>
         )}
 
-        <button
-          onClick={() => alert("Booking confirmed!")}
-          className={`btn-primary w-full md:w-auto px-4 py-2 text-white ${
-            isSlotAvailable && selectedSlot
-              ? ""
-              : "bg-gray-300 cursor-not-allowed"
-          } rounded-lg`}
-          disabled={!isSlotAvailable || !selectedSlot}
-        >
-          Book Now
-        </button>
+        <Link to={"/checkout"}>
+          {" "}
+          <button
+            className={`btn-primary w-full md:w-auto px-4 py-2 text-white ${
+              isSlotAvailable && selectedSlot
+                ? ""
+                : "bg-gray-300 cursor-not-allowed"
+            } rounded-lg`}
+            disabled={!isSlotAvailable || !selectedSlot}
+          >
+            Book Now
+          </button>
+        </Link>
       </section>
     </div>
   );
