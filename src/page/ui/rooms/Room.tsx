@@ -1,6 +1,8 @@
-import React, { useState, useEffect, EventHandler } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import { useGetAllRoomsQuery } from "../../../redux/fetures/rooms/rooms.api";
 import { TQueryParams } from "../../../types";
+import { Link } from "react-router-dom";
+import Skeletons from "../../../componnets/skeleton/Skeletons";
 
 const RoomPage = () => {
   const [params, setParams] = useState<TQueryParams[]>([]);
@@ -13,7 +15,7 @@ const RoomPage = () => {
 
   console.log(filters.priceRange);
 
-  const { data: roomsData } = useGetAllRoomsQuery(params);
+  const { data: roomsData, isLoading } = useGetAllRoomsQuery(params);
 
   useEffect(() => {
     const buildQueryParams = () => {
@@ -47,11 +49,11 @@ const RoomPage = () => {
     setParams(buildQueryParams());
   }, [filters]);
 
-  const handleSearch = (event: EventHandler) => {
+  const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
     setFilters({ ...filters, searchTerm: event.target.value });
   };
 
-  const handleCapacityChange = (event) => {
+  const handleCapacityChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(event.target.value);
     setFilters({
       ...filters,
@@ -59,7 +61,7 @@ const RoomPage = () => {
     });
   };
 
-  const handlePriceRangeChange = (event) => {
+  const handlePriceRangeChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(event.target.value);
     setFilters({
       ...filters,
@@ -67,7 +69,7 @@ const RoomPage = () => {
     });
   };
 
-  const handleSortChange = (event) => {
+  const handleSortChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setFilters({
       ...filters,
       sort: event.target.value,
@@ -82,6 +84,9 @@ const RoomPage = () => {
       sort: "",
     });
   };
+  if (isLoading) {
+    return <Skeletons />;
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -159,33 +164,46 @@ const RoomPage = () => {
           </button>
         </aside>
 
-        <main className="w-full md:w-3/4 p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {roomsData?.length > 0 ? (
-            roomsData?.map((room) => (
-              <div
-                key={room._id}
-                className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 ease-in-out"
-              >
-                <img alt={room.name} className="w-full h-48 object-cover" />
-                <div className="p-4">
-                  <h2 className="text-lg font-bold text-gray-800">
-                    {room.name}
-                  </h2>
-                  <p className="text-gray-600">Capacity: {room.capacity}</p>
-                  <p className="text-gray-600">
-                    Price Per Slot: ${room.pricePerSlot}
-                  </p>
-                  <button className="btn-primary w-full mt-4">
-                    See Details
-                  </button>
+        <main
+          className={`w-full md:w-3/4 p-4 grid ${
+            roomsData && roomsData.length > 0
+              ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+              : "flex items-center justify-center"
+          }`}
+        >
+          {roomsData &&
+            (roomsData.length > 0 ? (
+              roomsData.map((room) => (
+                <div
+                  key={room._id}
+                  className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 ease-in-out"
+                >
+                  <img alt={room.name} className="w-full h-48 object-cover" />
+                  <div className="p-4">
+                    <h2 className="text-lg font-bold text-gray-800">
+                      {room.name}
+                    </h2>
+                    <p className="text-gray-600">Capacity: {room.capacity}</p>
+                    <p className="text-gray-600">
+                      Price Per Slot: ${room.pricePerSlot}
+                    </p>
+                    <Link to={`/rooms/${room._id}`}>
+                      <button className="btn-primary w-full mt-4">
+                        See Details
+                      </button>
+                    </Link>
+                  </div>
                 </div>
+              ))
+            ) : (
+              <div className="mt-5">
+                <img
+                  src="https://png.pngtree.com/element_our/20200610/ourmid/pngtree-not-found-image_2238448.jpg"
+                  alt=""
+                />
+                <p className="text-primary text-center">No data found</p>
               </div>
-            ))
-          ) : (
-            <div className="flex items-center justify-center">
-              <p className="text-primary ">no data found</p>
-            </div>
-          )}
+            ))}
         </main>
       </div>
     </div>

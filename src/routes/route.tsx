@@ -12,6 +12,7 @@ import { adminPaths } from "./adminroute";
 import Room from "../page/ui/rooms/Room";
 import ProtectedRoute from "./protectedRoute/ProtectedRoute";
 import { userPaths } from "./userRoute";
+import SingleRoom from "../page/ui/rooms/SingleRoom";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "/rooms",
         element: <Room />,
+      },
+      {
+        path: "/rooms/:roomId",
+        element: <SingleRoom />,
       },
     ],
   },
