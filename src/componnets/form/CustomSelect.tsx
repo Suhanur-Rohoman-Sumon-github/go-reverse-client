@@ -5,7 +5,8 @@ type TCustomSelectProps = {
   label: string;
   name: string;
   options: { value: string; label: string; disabled?: boolean }[];
-  defaultValue: string;
+  defaultValue?: string;
+  mode?: "multiple " | undefined;
 };
 
 const CustomSelect = ({
@@ -13,6 +14,7 @@ const CustomSelect = ({
   name,
   options,
   defaultValue,
+  mode,
 }: TCustomSelectProps) => (
   <Controller
     name={name}
@@ -20,11 +22,12 @@ const CustomSelect = ({
       <Form.Item label={label}>
         <Select
           defaultValue={defaultValue}
+          mode={mode ? "multiple" : undefined}
           {...field}
           style={{ width: "100%" }}
           options={options}
         />
-        {error && <p>{error.message}</p>}
+        {error && <p className=" mt-2 text-red-500">{error.message}</p>}
       </Form.Item>
     )}
   />

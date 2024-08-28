@@ -1,25 +1,24 @@
-import { Button, Form, Input, Select, Row, Col, Card } from "antd";
+import { Row, Col, Card } from "antd";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import CustomForm from "../../../componnets/form/CustomForm";
 import CustomInput from "../../../componnets/form/CustomInput";
 import CustomSelect from "../../../componnets/form/CustomSelect";
-import { Controller } from "react-hook-form";
+import { FormEventHandler } from "react";
 
-const { Option } = Select;
-
-// Define your validation schema using Zod
 const roomResolver = z.object({
-  roomName: z.string().nonempty({ message: "Room name is required" }),
-  capacity: z.string().min(1, { message: "Capacity must be at least 1" }),
-  pricePerSlot: z
-    .string()
-    .min(0, { message: "Price per slot must be positive" }),
-  roomType: z.string().nonempty({ message: "Room type is required" }),
+  roomName: z.string({ required_error: "Room name is required" }),
+  image: z.string({ required_error: "image name is required" }),
+  capacity: z.string({ required_error: "Capacity must be at least 1" }),
+  pricePerSlot: z.string({ required_error: "Price per slot must be positive" }),
+  roomType: z.string({ required_error: "Room type is required" }),
+  amenities: z.array(
+    z.string({ required_error: "Please select at least one amenity" })
+  ),
 });
 
 const CreateRoom = () => {
-  const onSubmit = (data) => {
+  const onSubmit = (data: FormEventHandler) => {
     console.log(data);
   };
 
@@ -30,20 +29,23 @@ const CreateRoom = () => {
   ];
 
   const amenityOptions = [
-    { value: "standard", label: "Standard" },
-    { value: "deluxe", label: "Deluxe" },
-    { value: "suite", label: "Suite" },
+    { value: "Projector", label: "Projector" },
+    { value: "Whiteboard", label: "Whiteboard" },
+    { value: "WiFi", label: "WiFi" },
+    { value: "Teleconference", label: "Teleconference" },
+    { value: "Air Conditioning", label: "Air Conditioning" },
   ];
 
   return (
     <Card style={{ width: "100%", padding: "20px" }}>
       <CustomForm onSubmit={onSubmit} resolver={zodResolver(roomResolver)}>
-        {/* Room Image Upload */}
-        <Form.Item label="Room Image" valuePropName="fileList">
-          <input type="file" name="image" />
-        </Form.Item>
+        <CustomInput
+          label="image"
+          name="image"
+          placeholder="Enter room name"
+          type="text"
+        />
 
-        {/* Room Name and Capacity - Two inputs in one row */}
         <Row gutter={16}>
           <Col span={12}>
             <CustomInput
@@ -81,11 +83,18 @@ const CreateRoom = () => {
             />
           </Col>
         </Row>
+        <Col>
+          <CustomSelect
+            mode={"multiple "}
+            label="Amenities"
+            name="amenities"
+            options={amenityOptions}
+          />
+        </Col>
 
-        {/* Submit Button */}
-        <Button type="primary" htmlType="submit" style={{ marginTop: "20px" }}>
+        <button className="btn-primary w-full" style={{ marginTop: "20px" }}>
           submit
-        </Button>
+        </button>
       </CustomForm>
     </Card>
   );

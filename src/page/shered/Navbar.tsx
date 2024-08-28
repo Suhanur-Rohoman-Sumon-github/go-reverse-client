@@ -1,11 +1,38 @@
 import { useState, useEffect } from "react";
 import logo from "../../assets/Abstract_ball_globe_icons_logo_template-removebg-preview.png";
 import { Link, NavLink } from "react-router-dom";
+import { currentUser, logOut } from "../../redux/fetures/auth/auth.slice";
+import { useAppDispatch, useAppSelector } from "../../redux/hook";
+import { Avatar, Button, Dropdown, Menu, Tooltip } from "antd";
+import { FaUser } from "react-icons/fa6";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(currentUser);
+  const handleLogout = () => {
+    dispatch(logOut());
+  };
+  const menuItems = (
+    <Menu>
+      <Menu.Item>
+        <Button type="text">
+          <Link to={`/${user?.role}/dashboard`} className="">
+            My DashBoard
+          </Link>
+        </Button>
+      </Menu.Item>
+      <Menu.Item key="profile">
+        <Button type="text">Profile</Button>
+      </Menu.Item>
+      <Menu.Item key="logout">
+        <Button onClick={handleLogout} type="text">
+          Logout
+        </Button>
+      </Menu.Item>
+    </Menu>
+  );
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 80) {
@@ -75,22 +102,42 @@ const Navbar = () => {
               </NavLink>
             </div>
 
-            <div className="hidden md:block">
-              <Link to={"/login"} className="text-[#4cbfb0] mr-4 font-bold">
-                Login
-              </Link>
-              <Link
-                to={"/sign-up"}
-                className="inline-block px-4 py-2 text-white bg-[#4cbfb0] rounded-lg"
-              >
-                Sign Up Now
-              </Link>
-            </div>
+            {user ? (
+              <div className="flex items-center gap-4">
+                <div>
+                  <Tooltip placement="right" title="John Doe">
+                    <Dropdown
+                      overlay={menuItems}
+                      trigger={["click"]}
+                      placement="bottomRight"
+                    >
+                      <Avatar
+                        size={40}
+                        icon={<FaUser />}
+                        style={{ cursor: "pointer" }}
+                      />
+                    </Dropdown>
+                  </Tooltip>
+                </div>
+              </div>
+            ) : (
+              <div className="hidden md:block">
+                <Link to={"/login"} className="btn-secondary mr-4">
+                  Login
+                </Link>
+                <Link
+                  to={"/sign-up"}
+                  className="inline-block px-4 py-2 text-white bg-[#4cbfb0] rounded-lg"
+                >
+                  Sign Up Now
+                </Link>
+              </div>
+            )}
 
             <div className="flex md:hidden">
               <button
                 onClick={toggleSidebar}
-                className="text-gray-800 hover:text-blue-500 focus:outline-none"
+                className="text-gray-800  focus:outline-none"
                 aria-label="Toggle menu"
               >
                 <svg

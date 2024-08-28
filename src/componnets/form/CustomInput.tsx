@@ -16,7 +16,7 @@ const CustomInput = ({ type, name, placeholder, label }: TCustomInputProps) => {
         render={({ field, fieldState: { error } }) => (
           <Form.Item label={label}>
             <Input id={name} {...field} type={type} placeholder={placeholder} />
-            {error && <p>{error.message}</p>}
+            {error && <p className="mt-2 text-red-500">{error.message}</p>}
           </Form.Item>
         )}
       />
