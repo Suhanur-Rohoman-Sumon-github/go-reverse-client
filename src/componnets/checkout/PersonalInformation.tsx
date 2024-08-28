@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import CustomForm from "../form/CustomForm";
 import CustomInput from "../form/CustomInput";
+import { useAppDispatch } from "../../redux/hook";
+import { updateIsSubmitted } from "../../redux/fetures/checkout/checkout.slice";
 
-// Define Zod schema for validation
 const personalInfoResolver = z.object({
   email: z
     .string()
@@ -17,8 +19,10 @@ const personalInfoResolver = z.object({
 });
 
 const PersonalInformation = () => {
+  const disPatch = useAppDispatch();
+
   const onSubmit = (data: any) => {
-    // Handle form submission here
+    disPatch(updateIsSubmitted(true));
     console.log(data);
   };
 
