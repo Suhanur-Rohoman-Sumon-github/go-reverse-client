@@ -1,22 +1,32 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { useGetSingleRoomQuery } from "../../../redux/fetures/rooms/rooms.api";
+import { useGetAllSlotsQuery } from "../../../redux/fetures/slots/slots.api";
+import moment from "moment";
 
 const SingleRoom = () => {
   const [isSlotAvailable, setIsSlotAvailable] = useState(true); // Assuming slots are available initially
-  const [selectedSlot, setSelectedSlot] = useState<number | null>(null); // Track selected slot
+  const [selectedSlot, setSelectedSlot] = useState<number | null>(null);
 
-  // Scroll to the booking section
-  const scrollToBooking = () => {
-    const bookingSection = document.getElementById("booking-section");
-    bookingSection?.scrollIntoView({ behavior: "smooth" });
-  };
+  const { roomId } = useParams();
+  const {
+    data: SingleRoom,
+    error: roomError,
+    isLoading: roomLoading,
+  } = useGetSingleRoomQuery(roomId);
+  const {
+    data: availableSlots,
+    error: slotsError,
+    isLoading: slotsLoading,
+  } = useGetAllSlotsQuery(roomId);
+  console.log(availableSlots);
 
-  // Simulate slots for demonstration
-  const availableSlots = [
-    { id: 1, time: "10:00 AM - 11:00 AM" },
-    { id: 2, time: "11:30 AM - 12:30 PM" },
-    { id: 3, time: "01:00 PM - 02:00 PM" },
-    { id: 4, time: "02:30 PM - 03:30 PM" },
-  ];
+  if (roomLoading || slotsLoading) return <div>Loading...</div>;
+  if (roomError || slotsError) return <div>Error loading data</div>;
+
+  if (!SingleRoom) return <div>No room data available</div>;
+
+  const { name, capacity, floorNo, pricePerSlot, amenities } = SingleRoom;
 
   // Handle slot selection
   const handleSlotSelection = (slotId: number) => {
@@ -27,8 +37,6 @@ const SingleRoom = () => {
     <div className="min-h-screen flex flex-col md:w-10/12 mx-auto mt-32 mb-8">
       {/* Room Details Section */}
       <section id="room-details" className="p-6">
-        <h1 className="text-primary">Room Title</h1>
-
         <section id="image-gallery" className="p-6  md:flex gap-4">
           <div className="md:w-4/5">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -126,7 +134,10 @@ const SingleRoom = () => {
             </div>
           </div>
         </section>
-
+        <h1 className="text-primary">{name}</h1>
+        <p className="text-[#434B4F]">{`Floor No : ${floorNo}`}</p>
+        <p className="text-[#434B4F]">{`Capacity : ${capacity}`}</p>
+        <p className="text-[#434B4F]">{`Price PerSlot : ${pricePerSlot}`}</p>
         <p className="mt-6 text-lg text-gray-700">
           This room is designed to provide a perfect environment for business
           meetings, conferences, and other professional gatherings. It is
@@ -137,31 +148,33 @@ const SingleRoom = () => {
         <div className="mt-6">
           <h2 className="text-primary">Facilities</h2>
           <ul className="list-disc list-inside text-lg text-gray-700">
-            <li>High-speed Wi-Fi</li>
-            <li>Audio-visual equipment</li>
-            <li>Air conditioning</li>
-            <li>Comfortable seating arrangements</li>
-            <li>Refreshments and catering options</li>
+            {amenities.map((item: string) => (
+              <div key={item}>
+                <li>{item}</li>
+              </div>
+            ))}
           </ul>
         </div>
       </section>
 
       <section id="booking-section" className="">
-        <h2 className="text-2xl font-bold mb-4">Check Availability</h2>
+        <h2 className="text-2xl font-bold mb-4">Book a slot</h2>
 
         {isSlotAvailable ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            {availableSlots.map((slot) => (
+            {availableSlots?.map((slot) => (
               <button
-                key={slot.id}
-                onClick={() => handleSlotSelection(slot.id)}
+                key={slot.startTime}
+                onClick={() => handleSlotSelection(slot.startTime)}
                 className={`w-full px-4 py-2 border rounded-lg ${
-                  selectedSlot === slot.id
+                  selectedSlot === slot.startTime
                     ? "bg-[#4cbfb0] text-white"
                     : "bg-white text-gray-700"
                 }`}
               >
-                {slot.time}
+                {moment(slot.startTime, "hh:mm A").isValid()
+                  ? moment(slot.startTime, "hh:mm A").format("hh:mm A")
+                  : "Invalid date"}
               </button>
             ))}
           </div>

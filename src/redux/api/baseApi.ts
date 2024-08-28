@@ -16,7 +16,6 @@ const baseQuery = fetchBaseQuery({ baseUrl: 'http://localhost:5000/api',
  // eslint-disable-next-line @typescript-eslint/no-explicit-any
  const baseQueryWitheRefreshToken:BaseQueryFn<FetchArgs,BaseQueryApi ,DefinitionType > = async (arg,api,extraOptions):Promise<any> =>{
  let result = await baseQuery(arg,api,extraOptions)
- console.log(result);
  if(result?.error?.status === 401){
     console.log('sending refresh token');
     const res = await fetch('http://localhost:5000/api/auth/refresh-token',{

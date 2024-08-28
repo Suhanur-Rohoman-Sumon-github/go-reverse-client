@@ -27,7 +27,23 @@ const roomApi = baseApi.injectEndpoints({
         }
       },
     }),
+    getSingleRoom:builder.query({
+      query:(id:string)=>({
+        url:`/rooms/${id}`
+      }),
+      transformResponse: (response: TResponseRedux<TRoomData[]>) => {
+        
+        if (response.success) {
+          return response?.data || []; 
+        } else {
+          console.error(response.error?.data.message); 
+          return []; 
+        }
+      },
+    })
+    
   }),
+  
 });
 
-export const { useGetAllRoomsQuery } = roomApi;
+export const { useGetAllRoomsQuery,useGetSingleRoomQuery } = roomApi;

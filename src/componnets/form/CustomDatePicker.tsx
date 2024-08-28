@@ -1,21 +1,19 @@
-import { Form, Input } from "antd";
+import { DatePicker, Form } from "antd";
 import { Controller } from "react-hook-form";
 
-type TCustomInputProps = {
-  type: string;
+type TCustomDatePickerProps = {
   name: string;
-  placeholder: string;
   label?: string;
 };
 
-const CustomInput = ({ type, name, placeholder, label }: TCustomInputProps) => {
+const CustomDatePicker = ({ name, label }: TCustomDatePickerProps) => {
   return (
     <>
       <Controller
         name={name}
         render={({ field, fieldState: { error } }) => (
           <Form.Item label={label}>
-            <Input id={name} {...field} type={type} placeholder={placeholder} />
+            <DatePicker {...field} style={{ width: "100%" }} size={"large"} />
             {error && <p className="mt-2 text-red-500">{error.message}</p>}
           </Form.Item>
         )}
@@ -24,4 +22,4 @@ const CustomInput = ({ type, name, placeholder, label }: TCustomInputProps) => {
   );
 };
 
-export default CustomInput;
+export default CustomDatePicker;

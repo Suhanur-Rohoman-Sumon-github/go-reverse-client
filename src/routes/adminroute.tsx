@@ -4,6 +4,8 @@ import AllRooms from "../page/Dashboard/admin/AllRooms";
 import CreateRoom from "../page/Dashboard/admin/CreateRoom";
 import { MdHouse } from "react-icons/md";
 import { BsFillHouseCheckFill } from "react-icons/bs";
+import CreateSlots from "../page/Dashboard/admin/CreateSlots";
+import { FaCheckToSlot } from "react-icons/fa6";
 
 export const adminPaths = [
   {
@@ -28,5 +30,11 @@ export const adminPaths = [
     element: <AllRooms />,
     label: "All Rooms",
     icon: <BsFillHouseCheckFill style={{ fontSize: "20px" }} />,
+  },
+  {
+    path: "crete-slots",
+    element: <CreateSlots />,
+    label: "Crete Slots",
+    icon: <FaCheckToSlot style={{ fontSize: "20px" }} />,
   },
 ];
