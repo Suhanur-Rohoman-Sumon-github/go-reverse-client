@@ -4,14 +4,17 @@ import StepIndicator from "../../../componnets/checkout/StepIndicator";
 import PersonalInformation from "../../../componnets/checkout/PersonalInformation";
 import Shiping from "../../../componnets/checkout/Shiping";
 import PaymentConfarmationPage from "../../../componnets/checkout/PaymentConfarmationPage";
-import { useAppSelector } from "../../../redux/hook";
+import { useAppDispatch, useAppSelector } from "../../../redux/hook";
+import { updateIsSubmitted } from "../../../redux/fetures/checkout/checkout.slice";
 
 const Checkout = () => {
   const [currentStep, setCurrentStep] = useState(1);
+  const disPatch = useAppDispatch();
   const { isSubmitted } = useAppSelector((state) => state.checkout);
 
-  //   const isStripe = useAppSelector((state) => state.payment.isStripe);
-  //   const { orderInfo, isSubmitted } = useAppSelector((state) => state.orders);
+  const { isStripe, isPaymentConfirm } = useAppSelector(
+    (state) => state.payment
+  );
 
   const handleNextStep = () => {
     setCurrentStep((prevStep) => prevStep + 1);
@@ -27,6 +30,7 @@ const Checkout = () => {
   };
 
   useEffect(() => {
+    disPatch(updateIsSubmitted(false));
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
       event.preventDefault();
       event.returnValue = "";
@@ -37,7 +41,7 @@ const Checkout = () => {
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-  }, []);
+  }, [disPatch]);
 
   return (
     <div className="my-32 w-9/12 mx-auto">
@@ -65,10 +69,15 @@ const Checkout = () => {
       </div>
 
       <div className="flex justify-between mt-4">
-        {currentStep > 1 && (
+        {currentStep === 2 && (
           <button onClick={handlePreviousStep} className="btn-secondary">
             Previous
           </button>
+        )}
+        {currentStep === 3 && (
+          <Link to={"/"}>
+            <button className="btn-secondary">Back to home</button>
+          </Link>
         )}
         {currentStep === 1 && isSubmitted ? (
           <button
@@ -78,12 +87,12 @@ const Checkout = () => {
             Continue
           </button>
         ) : null}
-        {currentStep === 2 && (
+        {currentStep === 2 && isStripe && isPaymentConfirm && (
           <button
             onClick={handleNextStep}
             className="btn-primary px-4 py-2 rounded-md"
           >
-            Continue
+            Confirm Booking
           </button>
         )}
 

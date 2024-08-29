@@ -3,11 +3,13 @@ import { Link, useParams } from "react-router-dom";
 import { useGetSingleRoomQuery } from "../../../redux/fetures/rooms/rooms.api";
 import { useGetAllSlotsQuery } from "../../../redux/fetures/slots/slots.api";
 import moment from "moment";
+import { useAppDispatch } from "../../../redux/hook";
+import { setProductPrice } from "../../../redux/fetures/payment/payment.slice";
 
 const SingleRoom = () => {
   const [isSlotAvailable, setIsSlotAvailable] = useState(true); // Assuming slots are available initially
   const [selectedSlot, setSelectedSlot] = useState<number | null>(null);
-
+  const disPatch = useAppDispatch();
   const { roomId } = useParams();
   const {
     data: SingleRoom,
@@ -31,6 +33,7 @@ const SingleRoom = () => {
   // Handle slot selection
   const handleSlotSelection = (slotId: number) => {
     setSelectedSlot(slotId);
+    disPatch(setProductPrice(pricePerSlot));
   };
 
   return (

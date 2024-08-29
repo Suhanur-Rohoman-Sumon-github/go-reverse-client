@@ -5,6 +5,7 @@ import { baseApi } from './api/baseApi'
 import { persistStore, persistReducer, FLUSH, REHYDRATE, PERSIST, PAUSE, PURGE, REGISTER } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import checkoutSlice from './fetures/checkout/checkout.slice'
+import paymentSlice from './fetures/payment/payment.slice'
 const persistConfig = {
   key: 'root',
   storage,
@@ -15,6 +16,7 @@ export const store = configureStore({
     counter: counterslice,
     auth: persistedReducer,
     checkout:checkoutSlice,
+    payment:paymentSlice,
     [baseApi.reducerPath]: baseApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

@@ -12,6 +12,7 @@
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
     "@reduxjs/toolkit": "^2.2.7",
+    "@stripe/react-stripe-js": "^2.8.0",
     "antd": "^5.20.2",
     "aos": "^2.3.4",
     "jwt-decode": "^4.0.0",

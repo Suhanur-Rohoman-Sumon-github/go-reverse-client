@@ -1,17 +1,29 @@
+import { Elements } from "@stripe/react-stripe-js";
 import { updatePaymentType } from "../../redux/fetures/checkout/checkout.slice";
 import { useAppDispatch, useAppSelector } from "../../redux/hook";
-
+import CheckoutForm from "./CheckoutForm";
+import { loadStripe } from "@stripe/stripe-js";
+import {
+  setIsPaymentConfirm,
+  setPaymentMethod,
+} from "../../redux/fetures/payment/payment.slice";
+import { useEffect } from "react";
 const Shiping = () => {
-  // const stripePromise = loadStripe(import.meta.env.VITE_PAYMENT_PK);
+  const stripePromise = loadStripe(import.meta.env.VITE_PAYMENT_PK);
   const dispatch = useAppDispatch();
   const { paymentType } = useAppSelector((state) => state.checkout);
+  const { isPaymentConfirm } = useAppSelector((state) => state.payment);
 
+  useEffect(() => {
+    dispatch(setIsPaymentConfirm(""));
+  }, [dispatch]);
   const paymentOptions = [
     { id: 2, name: "Stripe", deliveryTime: "3-5 Business Days" },
     { id: 3, name: "Paypal", deliveryTime: "3-5 Business Days" },
   ];
 
   const handlePaymentSelection = (name: string) => {
+    dispatch(setPaymentMethod(name));
     dispatch(updatePaymentType(name));
   };
 
@@ -62,12 +74,12 @@ const Shiping = () => {
             ))}
           </div>
 
-          {paymentType === "Stripe" && (
+          {paymentType === "Stripe" && !isPaymentConfirm && (
             <div className="mt-6 p-4 border rounded-lg bg-gray-100">
               <h2 className="text-xl font-semibold mb-4">Enter Card Details</h2>
-              {/* <Elements stripe={stripePromise}>
-                <CheckoutForm price={price}></CheckoutForm>
-              </Elements> */}
+              <Elements stripe={stripePromise}>
+                <CheckoutForm />
+              </Elements>
             </div>
           )}
           {paymentType === "Paypal" && (
@@ -75,9 +87,6 @@ const Shiping = () => {
               <h2 className="text-xl font-semibold mb-4">
                 paypal is coming soon in bangladesh wait for ict minister
               </h2>
-              {/* <Elements stripe={stripePromise}>
-                <CheckoutForm price={price}></CheckoutForm>
-              </Elements> */}
             </div>
           )}
         </div>

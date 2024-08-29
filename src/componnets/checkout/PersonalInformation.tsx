@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import CustomForm from "../form/CustomForm";
 import CustomInput from "../form/CustomInput";
-import { useAppDispatch } from "../../redux/hook";
+import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import { updateIsSubmitted } from "../../redux/fetures/checkout/checkout.slice";
 
 const personalInfoResolver = z.object({
@@ -20,7 +20,7 @@ const personalInfoResolver = z.object({
 
 const PersonalInformation = () => {
   const disPatch = useAppDispatch();
-
+  const { isSubmitted } = useAppSelector((state) => state.checkout);
   const onSubmit = (data: any) => {
     disPatch(updateIsSubmitted(true));
     console.log(data);
@@ -88,12 +88,14 @@ const PersonalInformation = () => {
           />
         </div>
 
-        <button
-          type="submit"
-          className="btn-primary px-4 py-2 rounded-md w-full"
-        >
-          Save
-        </button>
+        {!isSubmitted && (
+          <button
+            type="submit"
+            className="btn-primary px-4 py-2 rounded-md w-full"
+          >
+            Save
+          </button>
+        )}
       </CustomForm>
     </div>
   );
