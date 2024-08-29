@@ -1,4 +1,4 @@
-import { TResponseRedux, TRoomData } from "../../../types";
+import { TResponseRedux, TRoomData, TSlots } from "../../../types";
 import { baseApi } from "../../api/baseApi";
 
 const slotApi = baseApi.injectEndpoints({
@@ -17,7 +17,7 @@ const slotApi = baseApi.injectEndpoints({
           params: params
         };
       },
-      transformResponse: (response: TResponseRedux<TRoomData[]>) => {
+      transformResponse: (response: TResponseRedux<TSlots[]>) => {
         if (response.success) {
           return response.data || [];
         } else {

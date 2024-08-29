@@ -1,21 +1,10 @@
 import { Row, Col, Card } from "antd";
 import { zodResolver } from "@hookform/resolvers/zod";
-import z from "zod";
 import CustomForm from "../../../componnets/form/CustomForm";
 import CustomInput from "../../../componnets/form/CustomInput";
 import CustomSelect from "../../../componnets/form/CustomSelect";
 import { FormEventHandler } from "react";
-
-const roomResolver = z.object({
-  roomName: z.string({ required_error: "Room name is required" }),
-  image: z.string({ required_error: "image name is required" }),
-  capacity: z.string({ required_error: "Capacity must be at least 1" }),
-  pricePerSlot: z.string({ required_error: "Price per slot must be positive" }),
-  roomType: z.string({ required_error: "Room type is required" }),
-  amenities: z.array(
-    z.string({ required_error: "Please select at least one amenity" })
-  ),
-});
+import { roomResolver } from "../../../zodeSchema/ZodSchemaResolver";
 
 const CreateRoom = () => {
   const onSubmit = (data: FormEventHandler) => {

@@ -1,22 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { zodResolver } from "@hookform/resolvers/zod";
-import z from "zod";
 import CustomForm from "../form/CustomForm";
 import CustomInput from "../form/CustomInput";
 import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import { updateIsSubmitted } from "../../redux/fetures/checkout/checkout.slice";
-
-const personalInfoResolver = z.object({
-  email: z
-    .string()
-    .email({ message: "Invalid email address" })
-    .nonempty("Email is required"),
-  firstName: z.string().nonempty("First Name is required"),
-  lastName: z.string().nonempty("Last Name is required"),
-  address: z.string().nonempty("Address is required"),
-  city: z.string().nonempty("City is required"),
-  zip: z.string().nonempty("Zip Code is required"),
-});
+import { personalInfoResolver } from "../../zodeSchema/ZodSchemaResolver";
 
 const PersonalInformation = () => {
   const disPatch = useAppDispatch();

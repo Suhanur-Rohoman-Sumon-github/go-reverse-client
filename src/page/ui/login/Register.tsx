@@ -1,97 +1,122 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { zodResolver } from "@hookform/resolvers/zod";
 import { FaFacebook, FaGoogle } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import Background from "../../../componnets/ui/login/Background";
+import CustomForm from "../../../componnets/form/CustomForm";
+import CustomInput from "../../../componnets/form/CustomInput";
+import { useRegistrationMutation } from "../../../redux/fetures/auth/authApi";
+import { toast } from "sonner";
+import { getErrorMessage } from "../../../utils/genareteError";
+import { registrationResolver } from "../../../zodeSchema/ZodSchemaResolver";
 
-const Register = () => {
+const RegistrationForm = () => {
+  const [register] = useRegistrationMutation();
+
+  const onSubmit = async (data: any) => {
+    const toastId = toast.loading("user is creating");
+    data.role = "user";
+    const response = await register(data);
+    if (response?.data?.success === true) {
+      toast.success("user sing up successfully", { id: toastId });
+    } else {
+      const errorMessage = getErrorMessage(response.error);
+      toast.error(`${JSON.stringify(errorMessage)}`, { id: toastId });
+    }
+  };
+
   return (
-    <div className="relative h-screen bg-[#dbf2ef]">
+    <div className="relative h-screen md:h-[1100px] bg-[#dbf2ef]">
       <Background />
 
-      <div className="absolute md:top-14 md:right-32 top-40 md:h-[700px] p-5 md:w-[600px] w-[400px] ml-8 bg-white rounded-lg shadow-lg">
+      <div className="absolute md:top-14 md:right-32 top-40 md:h-[900px] p-5 md:w-[600px] w-[400px] ml-8 bg-white rounded-lg shadow-lg">
         <h2 className="text-2xl font-bold text-[#062132] text-center mb-4">
           Create a free account now
         </h2>
-        <form>
+
+        <CustomForm
+          onSubmit={onSubmit}
+          resolver={zodResolver(registrationResolver)}
+        >
+          {/* Name Fields */}
           <div className="flex justify-between mb-4">
             <div className="w-1/2 pr-2">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="firstName"
-              >
-                First Name
-              </label>
-              <input
-                id="firstName"
+              <CustomInput
+                label="Name"
+                name="name"
                 type="text"
-                placeholder="First Name"
-                className="w-full px-3 py-2 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                placeholder="Enter your full name"
               />
             </div>
             <div className="w-1/2 pl-2">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="lastName"
-              >
-                Last Name
-              </label>
-              <input
-                id="lastName"
-                type="text"
-                placeholder="Last Name"
-                className="w-full px-3 py-2 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              <CustomInput
+                label="Email"
+                name="email"
+                type="email"
+                placeholder="Enter your email"
               />
             </div>
           </div>
 
-          {/* Username Field */}
+          {/* Address Fields */}
           <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="username"
-            >
-              Username
-            </label>
-            <input
-              id="username"
+            <CustomInput
+              label="Street Address"
+              name="streetAddress"
               type="text"
-              placeholder="Enter your username"
-              className="w-full px-3 py-2 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              placeholder="Enter your street address"
+            />
+          </div>
+
+          <div className="flex justify-between mb-4">
+            <div className="w-1/3 pr-2">
+              <CustomInput
+                label="City"
+                name="city"
+                type="text"
+                placeholder="Enter your city"
+              />
+            </div>
+            <div className="w-1/3 px-2">
+              <CustomInput
+                label="State"
+                name="state"
+                type="text"
+                placeholder="Enter your state (e.g., CA)"
+              />
+            </div>
+            <div className="w-1/3 pl-2">
+              <CustomInput
+                label="Zip Code"
+                name="zip"
+                type="text"
+                placeholder="Enter your zip code"
+              />
+            </div>
+          </div>
+
+          {/* Phone Field */}
+          <div className="mb-4">
+            <CustomInput
+              label="Phone"
+              name="phone"
+              type="text"
+              placeholder="Enter your phone number"
             />
           </div>
 
           {/* Password Field */}
           <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="password"
-            >
-              Password
-            </label>
-            <input
-              id="password"
+            <CustomInput
+              label="Password"
+              name="password"
               type="password"
               placeholder="Enter your password"
-              className="w-full px-3 py-2 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
             />
           </div>
 
-          {/* Confirm Password Field */}
-          <div className="mb-6">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="confirmPassword"
-            >
-              Confirm Password
-            </label>
-            <input
-              id="confirmPassword"
-              type="password"
-              placeholder="Confirm your password"
-              className="w-full px-3 py-2 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-            />
-          </div>
+          {/* Submit Button */}
 
-          {/* Login Button */}
           <button type="submit" className="btn-primary w-full">
             Register
           </button>
@@ -125,10 +150,10 @@ const Register = () => {
               Login
             </Link>
           </div>
-        </form>
+        </CustomForm>
       </div>
     </div>
   );
 };
 
-export default Register;
+export default RegistrationForm;

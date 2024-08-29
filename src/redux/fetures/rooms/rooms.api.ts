@@ -1,4 +1,4 @@
-import { TResponseRedux, TRoomData,TQueryParams } from "../../../types";
+import { TResponseRedux, TRoomData,TQueryParams, TSingleRoom } from "../../../types";
 import { baseApi } from "../../api/baseApi";
 const roomApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -31,13 +31,13 @@ const roomApi = baseApi.injectEndpoints({
       query:(id:string)=>({
         url:`/rooms/${id}`
       }),
-      transformResponse: (response: TResponseRedux<TRoomData[]>) => {
+      transformResponse: (response: TResponseRedux<TSingleRoom>) => {
         
         if (response.success) {
-          return response?.data || []; 
+          return response?.data || {}; 
         } else {
           console.error(response.error?.data.message); 
-          return []; 
+          return {}; 
         }
       },
     })

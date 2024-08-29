@@ -5,7 +5,7 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
 type TFormConfig = {
   defaultValues?: Record<string, any>;
-  resolver?: any; // This should match the type of resolver used, e.g., Resolver<z.infer<typeof schema>>
+  resolver?: any;
 };
 
 type TFormProps = {
@@ -28,12 +28,10 @@ const CustomForm = ({
     formConfig["resolver"] = resolver;
   }
 
-  // Initialize useForm with the provided configuration, including resolver
   const methods = useForm(formConfig);
 
   return (
     <FormProvider {...methods}>
-      {/* Ant Design Form component for layout */}
       <Form layout="vertical" onFinish={methods.handleSubmit(onSubmit)}>
         {children}
       </Form>

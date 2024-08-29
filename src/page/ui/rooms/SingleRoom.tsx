@@ -5,30 +5,39 @@ import { useGetAllSlotsQuery } from "../../../redux/fetures/slots/slots.api";
 import moment from "moment";
 import { useAppDispatch } from "../../../redux/hook";
 import { setProductPrice } from "../../../redux/fetures/payment/payment.slice";
+import { TSingleRoom } from "../../../types";
+import Skeletons from "../../../componnets/skeleton/Skeletons";
 
 const SingleRoom = () => {
-  const [isSlotAvailable, setIsSlotAvailable] = useState(true); // Assuming slots are available initially
+  const [isSlotAvailable] = useState(true);
   const [selectedSlot, setSelectedSlot] = useState<number | null>(null);
+
   const disPatch = useAppDispatch();
   const { roomId } = useParams();
+
   const {
     data: SingleRoom,
-    error: roomError,
+
     isLoading: roomLoading,
-  } = useGetSingleRoomQuery(roomId);
+  } = useGetSingleRoomQuery(roomId as string);
   const {
     data: availableSlots,
-    error: slotsError,
+
     isLoading: slotsLoading,
   } = useGetAllSlotsQuery(roomId);
   console.log(availableSlots);
 
-  if (roomLoading || slotsLoading) return <div>Loading...</div>;
-  if (roomError || slotsError) return <div>Error loading data</div>;
+  if (roomLoading || slotsLoading)
+    return (
+      <div>
+        <Skeletons />
+      </div>
+    );
 
   if (!SingleRoom) return <div>No room data available</div>;
 
-  const { name, capacity, floorNo, pricePerSlot, amenities } = SingleRoom;
+  const { name, capacity, floorNo, pricePerSlot, amenities } =
+    SingleRoom as TSingleRoom;
 
   // Handle slot selection
   const handleSlotSelection = (slotId: number) => {
@@ -40,7 +49,7 @@ const SingleRoom = () => {
     <div className="min-h-screen flex flex-col md:w-10/12 mx-auto mt-32 mb-8">
       {/* Room Details Section */}
       <section id="room-details" className="p-6">
-        <section id="image-gallery" className="p-6  md:flex gap-4">
+        <section id="image-gallery" className=" md:flex gap-4">
           <div className="md:w-4/5">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="col-span-2 row-span-2 relative group">
@@ -102,7 +111,7 @@ const SingleRoom = () => {
 
           <div className="md:w-1/5 flex flex-col mt-5 items-center">
             <div className="flex items-center justify-center w-full mb-4 ">
-              <button className="btn-primary">
+              <button className="bg-[#4cbfb0] flex items-center text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition duration-300">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -137,7 +146,7 @@ const SingleRoom = () => {
             </div>
           </div>
         </section>
-        <h1 className="text-primary">{name}</h1>
+        <h1 className="text-primary mt-4">{name}</h1>
         <p className="text-[#434B4F]">{`Floor No : ${floorNo}`}</p>
         <p className="text-[#434B4F]">{`Capacity : ${capacity}`}</p>
         <p className="text-[#434B4F]">{`Price PerSlot : ${pricePerSlot}`}</p>
@@ -160,14 +169,14 @@ const SingleRoom = () => {
         </div>
       </section>
 
-      <section id="booking-section" className="">
-        <h2 className="text-2xl font-bold mb-4">Book a slot</h2>
+      <section id="booking-section" className="ml-6">
+        <h2 className="text-primary">Book a slot</h2>
 
         {isSlotAvailable ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             {availableSlots?.map((slot) => (
               <button
-                key={slot.startTime}
+                key={slot._id}
                 onClick={() => handleSlotSelection(slot.startTime)}
                 className={`w-full px-4 py-2 border rounded-lg ${
                   selectedSlot === slot.startTime

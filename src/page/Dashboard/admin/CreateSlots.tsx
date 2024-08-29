@@ -1,21 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Row, Col, Card } from "antd";
 import { zodResolver } from "@hookform/resolvers/zod";
-import z from "zod";
 import CustomForm from "../../../componnets/form/CustomForm";
 import CustomInput from "../../../componnets/form/CustomInput";
 import CustomSelect from "../../../componnets/form/CustomSelect";
 import { useCreateSlotsMutation } from "../../../redux/fetures/slots/slots.api";
 import { useGetAllRoomsQuery } from "../../../redux/fetures/rooms/rooms.api";
-
-// Define Zod schema for validation
-const slotResolver = z.object({
-  room: z.string({ required_error: "Room ID is required" }),
-  date: z.string({ required_error: "Date is required" }),
-  startTime: z.string({ required_error: "Start time is required" }),
-  endTime: z.string({ required_error: "End time is required" }),
-  isBooked: z.boolean(),
-});
+import { slotResolver } from "../../../zodeSchema/ZodSchemaResolver";
 
 const CreateSlots = () => {
   const [createSlots] = useCreateSlotsMutation();
