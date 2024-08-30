@@ -1,19 +1,16 @@
-import { Table, TableColumnsType, TableProps, Tag } from "antd";
-import { useState } from "react";
-import { TQueryParams } from "../../../types";
+import { Table, TableColumnsType, Tag } from "antd";
 import { useGetMyBookingsQuery } from "../../../redux/fetures/booking/booking.api";
 import Skeletons from "../../../componnets/skeleton/Skeletons";
 import moment from "moment";
+import { TBookings } from "../../../types/booking.type";
 
 // Define a type for the table data
-type TTableDataType = {
-  roomName: string;
-  dateTime: string;
-  status: string;
-};
+export type TTableDataType = Pick<
+  TBookings,
+  "roomName" | "dateTime" | "status" | "status"
+>;
 
 const MyBookings = () => {
-  const [params, setParams] = useState<TQueryParams[] | undefined>(undefined);
   const {
     data: MyBookings,
     isLoading,
@@ -53,29 +50,21 @@ const MyBookings = () => {
       dataIndex: "status",
       key: "status",
       render: (status: string) => (
-        <Tag color={status === "confirmed" ? "green" : "red"}>
-          {status.toUpperCase()}
+        <Tag
+          color={
+            status === "confirmed"
+              ? "green"
+              : status === "canceled"
+              ? "red"
+              : "orange"
+          }
+        >
+          {status === "canceled" ? "CANCEL" : status.toUpperCase()}
         </Tag>
       ),
       responsive: ["xs", "sm", "md", "lg", "xl"],
     },
   ];
-
-  // Handle table changes (e.g., filtering)
-  const onChange: TableProps<TTableDataType>["onChange"] = (
-    _pagination,
-    filters,
-    _sorter,
-    extra
-  ) => {
-    if (extra.action === "filter") {
-      const queryParams: TQueryParams[] = [];
-      filters.roomName?.forEach((item) =>
-        queryParams.push({ name: "roomName", value: item })
-      );
-      setParams(queryParams);
-    }
-  };
 
   if (isLoading) {
     return <Skeletons />;
@@ -87,7 +76,6 @@ const MyBookings = () => {
         loading={isFetching}
         columns={columns}
         dataSource={tableData}
-        onChange={onChange}
         showSorterTooltip={{ target: "sorter-icon" }}
         scroll={{ x: 800 }}
       />

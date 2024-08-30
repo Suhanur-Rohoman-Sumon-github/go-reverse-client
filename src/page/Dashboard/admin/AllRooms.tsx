@@ -1,8 +1,17 @@
-import { Table, TableColumnsType, TableProps } from "antd";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  Table,
+  Dropdown,
+  Menu,
+  Button,
+  TableColumnsType,
+  TableProps,
+} from "antd";
 import { useGetAllRoomsQuery } from "../../../redux/fetures/rooms/rooms.api";
 import { TQueryParams, TRoomData } from "../../../types";
 import { useState } from "react";
 import Skeletons from "../../../componnets/skeleton/Skeletons";
+
 export type TTableDataType = Pick<
   TRoomData,
   | "_id"
@@ -13,12 +22,15 @@ export type TTableDataType = Pick<
   | "pricePerSlot"
   | "roomNo"
 >;
+
 const AllRooms = () => {
   const [params, setParams] = useState<TQueryParams[] | undefined>(undefined);
   const { data: roomData, isLoading, isFetching } = useGetAllRoomsQuery(params);
 
+  // Format table data to match the expected type
   const tableData = roomData?.map(
     ({ _id, name, capacity, floorNo, pricePerSlot, amenities, roomNo }) => ({
+      key: _id, // Adding a key for Ant Design Table
       _id,
       name,
       capacity,
@@ -28,14 +40,30 @@ const AllRooms = () => {
       roomNo,
     })
   );
+
+  const handleMenuClick = (key: string, record: TTableDataType) => {
+    if (key === "update") {
+      console.log(`Update room with id ${record._id}`);
+    } else if (key === "delete") {
+      console.log(`Delete room with id ${record._id}`);
+    }
+  };
+
+  const menu = (record: TTableDataType) => (
+    <Menu onClick={({ key }) => handleMenuClick(key, record)}>
+      <Menu.Item key="update">Update</Menu.Item>
+      <Menu.Item key="delete">Delete</Menu.Item>
+    </Menu>
+  );
+
   const columns: TableColumnsType<TTableDataType> = [
     {
       title: "Name",
       dataIndex: "name",
-      showSorterTooltip: { target: "full-header" },
+      key: "name",
       filters: [
         {
-          text: "name",
+          text: "valobasa",
           value: "valobasa",
         },
       ],
@@ -44,40 +72,41 @@ const AllRooms = () => {
     {
       title: "Capacity",
       dataIndex: "capacity",
+      key: "capacity",
       responsive: ["xs", "sm", "md", "lg", "xl"],
     },
     {
-      title: "FloorNo",
+      title: "Floor No",
       dataIndex: "floorNo",
+      key: "floorNo",
       responsive: ["xs", "sm", "md", "lg", "xl"],
     },
     {
-      title: "PricePerSlot",
+      title: "Price Per Slot",
       dataIndex: "pricePerSlot",
+      key: "pricePerSlot",
       responsive: ["xs", "sm", "md", "lg", "xl"],
     },
     {
       title: "Amenities",
       dataIndex: "amenities",
+      key: "amenities",
       responsive: ["xs", "sm", "md", "lg", "xl"],
     },
     {
-      title: "RoomNo",
+      title: "Room No",
       dataIndex: "roomNo",
+      key: "roomNo",
       responsive: ["xs", "sm", "md", "lg", "xl"],
     },
     {
       title: "Action",
-      key: "x",
-      render: () => {
-        return (
-          <div>
-            <button>update</button>
-            <button className="ml-4">delete</button>
-          </div>
-        );
-      },
-      responsive: ["xs", "sm", "md", "lg", "xl"],
+      key: "action",
+      render: (_: any, record: TTableDataType) => (
+        <Dropdown overlay={menu(record)} trigger={["click"]}>
+          <Button>Actions</Button>
+        </Dropdown>
+      ),
     },
   ];
 
@@ -95,9 +124,11 @@ const AllRooms = () => {
       setParams(queryParams);
     }
   };
+
   if (isLoading) {
     return <Skeletons />;
   }
+
   return (
     <div>
       <Table

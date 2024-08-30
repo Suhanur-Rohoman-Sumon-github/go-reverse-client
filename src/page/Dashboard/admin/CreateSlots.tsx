@@ -12,9 +12,10 @@ const CreateSlots = () => {
   const [createSlots] = useCreateSlotsMutation();
   const { data: roomData } = useGetAllRoomsQuery(undefined);
 
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: any) => {
     console.log(data);
-    createSlots(data);
+    const res = await createSlots(data);
+    console.log(res);
   };
 
   const roomOptions =

@@ -1,4 +1,5 @@
-import { TResponseRedux, TRoomData,TQueryParams, TSingleRoom } from "../../../types";
+import { TResponseRedux, TQueryParams } from "../../../types";
+import { TBookingData } from "../../../types/booking.type";
 import { baseApi } from "../../api/baseApi";
 const bookingApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -8,7 +9,7 @@ const bookingApi = baseApi.injectEndpoints({
         body:payload,
         method: 'POST',
       }),
-     
+      invalidatesTags: [{ type: 'Bookings', id: 'LIST' }],
     }),
     getMyBookings: builder.query({
       query: (args) => {
@@ -23,8 +24,9 @@ const bookingApi = baseApi.injectEndpoints({
           method: 'GET',
           params:params
         };
+        
       },
-      transformResponse: (response: TResponseRedux<TRoomData[]>) => {
+      transformResponse: (response: TResponseRedux<TBookingData[]>) => {
         if (response.success) {
           return response?.data || []; 
         } else {
@@ -32,13 +34,14 @@ const bookingApi = baseApi.injectEndpoints({
           return []; 
         }
       },
+      providesTags: [{ type: 'Bookings', id: 'LIST' }],
     }),
-    getSingleRoom:builder.query({
-      query:(id:string)=>({
-        url:`/rooms/${id}`,
+    getAllBookings:builder.query({
+      query:()=>({
+        url:`/bookings`,
         method: 'GET',
       }),
-      transformResponse: (response: TResponseRedux<TSingleRoom>) => {
+      transformResponse: (response: TResponseRedux<TBookingData[]>) => {
         
         if (response.success) {
           return response?.data || {}; 
@@ -47,6 +50,7 @@ const bookingApi = baseApi.injectEndpoints({
           return {}; 
         }
       },
+      providesTags: [{ type: 'Bookings', id: 'LIST' }],
     }),
     
     
@@ -54,4 +58,4 @@ const bookingApi = baseApi.injectEndpoints({
   
 });
 
-export const { useGetMyBookingsQuery,useGetSingleRoomQuery,useCreateBookingMutation } = bookingApi;
+export const { useGetMyBookingsQuery,useGetAllBookingsQuery,useCreateBookingMutation } = bookingApi;

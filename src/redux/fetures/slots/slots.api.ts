@@ -1,4 +1,4 @@
-import { TResponseRedux, TRoomData, TSlots } from "../../../types";
+import { TResponseRedux, TSlots } from "../../../types";
 import { baseApi } from "../../api/baseApi";
 
 const slotApi = baseApi.injectEndpoints({
@@ -16,6 +16,7 @@ const slotApi = baseApi.injectEndpoints({
           method: 'GET',
           params: params
         };
+        
       },
       transformResponse: (response: TResponseRedux<TSlots[]>) => {
         if (response.success) {
@@ -25,6 +26,7 @@ const slotApi = baseApi.injectEndpoints({
           return [];
         }
       },
+      providesTags: [{ type: 'Slots', id: 'LIST' }],
     }),
     createSlots: builder.mutation({
       query: (payload) => ({
@@ -32,7 +34,16 @@ const slotApi = baseApi.injectEndpoints({
         method: 'POST',
         body: payload, 
       }),
-      transformResponse: (response: TResponseRedux<TRoomData>) => {
+      invalidatesTags: [{ type: 'Slots', id: 'LIST' }],
+
+    }),
+    getAllSlotsFromAdmin: builder.query({
+      query: () => ({
+        url: `/slots`,
+        method: 'GET',
+        
+      }),
+      transformResponse: (response: TResponseRedux<TSlots[]>) => {
         if (response.success) {
           return response.data;
         } else {
@@ -40,8 +51,10 @@ const slotApi = baseApi.injectEndpoints({
           return null; 
         }
       },
+      providesTags: [{ type: 'Slots', id: 'LIST' }],
+      
     })
   }),
 });
 
-export const { useGetAllSlotsQuery, useCreateSlotsMutation } = slotApi;
+export const { useGetAllSlotsQuery, useCreateSlotsMutation,useGetAllSlotsFromAdminQuery } = slotApi;
