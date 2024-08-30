@@ -1,4 +1,4 @@
-import { TResponseRedux, TQueryParams } from "../../../types";
+import { TResponseRedux } from "../../../types";
 import { TBookingData } from "../../../types/booking.type";
 import { baseApi } from "../../api/baseApi";
 const bookingApi = baseApi.injectEndpoints({
@@ -27,17 +27,12 @@ const bookingApi = baseApi.injectEndpoints({
       invalidatesTags: [{ type: 'Bookings', id: 'LIST' }],
     }),
     getMyBookings: builder.query({
-      query: (args) => {
-        const params = new URLSearchParams();
-        if(args){
-            args.forEach((item:TQueryParams) => {
-             params.append(item.name,item.value as string)
-           });
-        }
+      query: (id) => {
+        
         return {
-          url: `/my-bookings`,
+          url: `/bookings/${id}`,
           method: 'GET',
-          params:params
+          
         };
         
       },

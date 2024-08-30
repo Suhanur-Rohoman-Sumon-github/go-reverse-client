@@ -1,18 +1,20 @@
 import { Avatar, Breadcrumb, Button, Dropdown, Menu, Tooltip } from "antd";
 import { Header } from "antd/es/layout/layout";
 import React from "react";
-import { FaMessage, FaUser } from "react-icons/fa6";
+import { FaMessage } from "react-icons/fa6";
 import { IoIosNotifications } from "react-icons/io";
 import { Link, useLocation } from "react-router-dom";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { useAppDispatch } from "../../../redux/hook";
 import { logOut } from "../../../redux/fetures/auth/auth.slice";
+import useGetMe from "../../../hooks/useGetMe";
 type DashBoardHeaderProps = {
   collapsed: boolean;
   setCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
 };
 const DashBoardHeader = ({ collapsed, setCollapsed }: DashBoardHeaderProps) => {
   const dispatch = useAppDispatch();
+  const data = useGetMe();
   const { pathname } = useLocation();
   const generateBreadcrumbItems = () => {
     const pathnames = pathname.split("/").filter((x) => x);
@@ -88,7 +90,7 @@ const DashBoardHeader = ({ collapsed, setCollapsed }: DashBoardHeaderProps) => {
             }}
           />
           <div>
-            <Tooltip placement="right" title="John Doe">
+            <Tooltip placement="right" title={data?.name}>
               <Dropdown
                 overlay={menuItems}
                 trigger={["click"]}
@@ -96,7 +98,7 @@ const DashBoardHeader = ({ collapsed, setCollapsed }: DashBoardHeaderProps) => {
               >
                 <Avatar
                   size={40}
-                  icon={<FaUser />}
+                  src={data?.profileImage}
                   style={{ cursor: "pointer" }}
                 />
               </Dropdown>

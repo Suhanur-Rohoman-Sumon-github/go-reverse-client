@@ -3,6 +3,7 @@ import { useGetMyBookingsQuery } from "../../../redux/fetures/booking/booking.ap
 import Skeletons from "../../../componnets/skeleton/Skeletons";
 import moment from "moment";
 import { TBookings } from "../../../types/booking.type";
+import useGetMe from "../../../hooks/useGetMe";
 
 // Define a type for the table data
 export type TTableDataType = Pick<
@@ -11,19 +12,20 @@ export type TTableDataType = Pick<
 >;
 
 const MyBookings = () => {
+  const data = useGetMe();
   const {
     data: MyBookings,
     isLoading,
     isFetching,
-  } = useGetMyBookingsQuery(undefined);
+  } = useGetMyBookingsQuery(data?._id);
 
   // Prepare table data with necessary fields
   const tableData: TTableDataType[] =
     MyBookings?.map(({ room, date, slots, isConfirmed }) => ({
       roomName: room.name,
-      dateTime: `${date} ${moment(slots[0].startTime, "HH:mm").format(
+      dateTime: `${date} ${moment(slots[0]?.startTime, "HH:mm").format(
         "hh:mm A"
-      )} - ${moment(slots[slots.length - 1].endTime, "HH:mm").format(
+      )} - ${moment(slots[slots.length - 1]?.endTime, "HH:mm").format(
         "hh:mm A"
       )}`,
       status: isConfirmed,

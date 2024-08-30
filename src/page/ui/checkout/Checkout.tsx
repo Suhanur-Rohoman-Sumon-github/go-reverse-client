@@ -9,9 +9,11 @@ import { updateIsSubmitted } from "../../../redux/fetures/checkout/checkout.slic
 import ScrollToTop from "../../../componnets/scroltoTop/ScrollsToTop";
 import { useCreateBookingMutation } from "../../../redux/fetures/booking/booking.api";
 import { setSlotsId } from "../../../redux/fetures/slots/slots.slice";
+import useGetMe from "../../../hooks/useGetMe";
 
 const Checkout = () => {
   const [currentStep, setCurrentStep] = useState(1);
+  const data = useGetMe();
   const disPatch = useAppDispatch();
   const { isSubmitted } = useAppSelector((state) => state.checkout);
   const [createBooking] = useCreateBookingMutation(undefined);
@@ -116,12 +118,12 @@ const Checkout = () => {
         {currentStep === 3 ? (
           <div className="flex justify-between items-center">
             <div>
-              <Link to={`/user/my-booking`}>
+              <Link to={`/${data?.role}/dashboard`}>
                 <button
                   onClick={handleNextStep}
                   className="btn-primary px-4 py-2 rounded-md"
                 >
-                  Go to my Booking page
+                  Go to my dashboard page
                 </button>
               </Link>
             </div>

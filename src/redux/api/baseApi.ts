@@ -2,7 +2,7 @@ import { BaseQueryApi, BaseQueryFn, createApi, DefinitionType, FetchArgs, fetchB
 import { RootState } from '../store'
 import { logOut, setUser } from '../fetures/auth/auth.slice'
 
-const baseQuery = fetchBaseQuery({ baseUrl: 'http://localhost:5000/api',
+const baseQuery = fetchBaseQuery({ baseUrl: 'https://booking-system-dun-ten.vercel.app/api',
     credentials:"include",
     prepareHeaders:(heders,{getState})=>{
         const token =  (getState() as RootState).auth.token 

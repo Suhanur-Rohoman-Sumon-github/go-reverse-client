@@ -5,12 +5,12 @@ const Contact = () => {
       <div
         style={{
           backgroundImage:
-            "url(https://mechanicalkeyboards.com/cdn/shop/files/BOOG75_Slide.jpg?v=1713208855&width=1800)",
+            "url(https://convene.com/wp-content/uploads/2022/03/Meetings_01_Header1170x320-2048x606.jpg)",
         }}
         className="bg-cover bg-center h-80 flex items-center justify-center text-white"
       >
-        <div className="max-w-lg mx-auto text-center text-[#000]">
-          <h1 className="text-4xl font-extrabold mb-4">Contact Us</h1>
+        <div className="max-w-lg mx-auto text-center text-[#FFF]">
+          <h1 className="text-4xl font-bold mb-4">Contact Us</h1>
           <p className="text-lg">
             Have questions or feedback? We'd love to hear from you.
           </p>
@@ -18,66 +18,64 @@ const Contact = () => {
       </div>
 
       {/* Main Content Section */}
-      <div className="lg:w-9/12  mx-auto pt-20 flex flex-col lg:flex-row justify-center items-center gap-x-20">
-        <div className="lg:w-[40%] p-3 lg:p-0">
-          <h5 className="text-xl text-[#7C3FFF] font-cursive mb-5">
+      <div className="lg:w-10/12 mx-auto pt-20 flex flex-col lg:flex-row justify-center items-center gap-x-12">
+        <div className="lg:w-1/2 p-6 lg:p-0">
+          <h5 className="text-xl text-[#4cbfb0] font-semibold mb-4">
             CONTACT OUR SALES TEAM
           </h5>
-          <h2 className="text-4xl font-prompt mb-8">
+          <h2 className="text-3xl font-semibold mb-6">
             Increase revenue, accelerate sales pipeline, and improve customer
             retention.
           </h2>
-          <div className="flex items-center gap-x-2 mb-5">
-            <span className="text-[#7C3FFF] font-prompt text-4xl">20m</span>
-            <p className="text-xl font-cursive">users worldwide</p>
+          <div className="flex items-center gap-x-4 mb-6">
+            <span className="text-[#4cbfb0] text-3xl font-semibold">20m</span>
+            <p className="text-lg">users worldwide</p>
           </div>
-          <div className="flex items-center gap-x-2 mb-5">
-            <span className="text-[#7C3FFF]font-prompt text-4xl">100k</span>
-            <p className="text-xl font-cursive">companies use Calendly</p>
+          <div className="flex items-center gap-x-4 mb-6">
+            <span className="text-[#4cbfb0] text-3xl font-semibold">100k</span>
+            <p className="text-lg">companies use Calendly</p>
           </div>
-          <div className="flex items-center gap-x-2 mb-5">
-            <span className="text-[#7C3FFF] font-prompt text-4xl">200k</span>
-            <p className="text-xl font-cursive">
-              countries with monthly active users
-            </p>
+          <div className="flex items-center gap-x-4 mb-6">
+            <span className="text-[#4cbfb0] text-3xl font-semibold">200k</span>
+            <p className="text-lg">countries with monthly active users</p>
           </div>
         </div>
-        <form className="p-5 lg:w-[40%]">
-          <div className="flex justify-between items-center gap-x-2">
-            <div className="w-full">
+        <form className="p-6 lg:w-1/2">
+          <div className="flex flex-col lg:flex-row gap-x-6 mb-6">
+            <div className="w-full mb-4 lg:mb-0">
               <label
-                className="text-xl font-cursive my-5 block mb-3 text-[#3e5063]"
+                className="text-lg font-medium text-[#3e5063] mb-2 block"
                 htmlFor="firstName"
               >
                 First Name
               </label>
               <input
                 placeholder="Enter your first name"
-                type="name"
+                type="text"
                 required
-                className="input block w-full input-bordered"
+                className="block w-full border rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-[#4cbfb0]"
                 id="firstName"
               />
             </div>
             <div className="w-full">
               <label
-                className="text-xl font-cursive my-5 block mb-3 text-[#3e5063]"
+                className="text-lg font-medium text-[#3e5063] mb-2 block"
                 htmlFor="lastName"
               >
                 Last Name
               </label>
               <input
                 placeholder="Enter your last name"
-                type="name"
+                type="text"
                 required
-                className="input block w-full input-bordered"
+                className="block w-full border rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-[#4cbfb0]"
                 id="lastName"
               />
             </div>
           </div>
-          <div>
+          <div className="mb-6">
             <label
-              className="text-xl font-cursive my-5 block mb-3 text-[#3e5063]"
+              className="text-lg font-medium text-[#3e5063] mb-2 block"
               htmlFor="email"
             >
               Work Email
@@ -86,25 +84,27 @@ const Contact = () => {
               placeholder="Your Email"
               type="email"
               required
-              className="input block w-full input-bordered"
+              className="block w-full border rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-[#4cbfb0]"
               id="email"
             />
           </div>
-          <div>
+          <div className="mb-6">
             <label
-              className="text-xl font-cursive my-5 block mb-3 text-[#3e5063]"
+              className="text-lg font-medium text-[#3e5063] mb-2 block"
               htmlFor="description"
             >
               How Can We Help You
             </label>
             <textarea
-              className="textarea textarea-bordered w-full"
+              className="block w-full border rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-[#4cbfb0]"
               id="description"
-              rows={3}
-              placeholder="Bio"
+              rows={4}
+              placeholder="Describe your needs"
             ></textarea>
           </div>
-          <button className="button-primary">Submit</button>
+          <button className="w-full py-2 px-4 bg-[#4cbfb0] text-white rounded-lg hover:bg-[#3daea6] transition-colors duration-300">
+            Submit
+          </button>
         </form>
       </div>
     </div>

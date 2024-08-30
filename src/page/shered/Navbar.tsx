@@ -108,7 +108,7 @@ const Navbar = () => {
             {user ? (
               <div className="flex items-center gap-4">
                 <div>
-                  <Tooltip placement="right" title="John Doe">
+                  <Tooltip placement="right" title={data?.name}>
                     <Dropdown
                       overlay={menuItems}
                       trigger={["click"]}
