@@ -21,7 +21,7 @@ export type TRoomData = {
   }
 
   export interface TSlots {
-    _id?: string
+    _id?: string 
     room?: TRoomData
     date?: string
     startTime?: number

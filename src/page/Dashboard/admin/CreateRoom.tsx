@@ -6,16 +6,27 @@ import CustomInput from "../../../componnets/form/CustomInput";
 import CustomSelect from "../../../componnets/form/CustomSelect";
 import { roomResolver } from "../../../zodeSchema/ZodSchemaResolver";
 import { useCreateRoomMutation } from "../../../redux/fetures/rooms/rooms.api";
+import { toast } from "sonner";
+import { getErrorMessage } from "../../../utils/genareteError";
 
 const CreateRoom = () => {
   const [CreateRoom] = useCreateRoomMutation();
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: any) => {
     console.log(data);
     data.roomNo = Number(data.roomNo);
     data.floorNo = Number(data.floorNo);
     data.capacity = Number(data.capacity);
     data.pricePerSlot = Number(data.pricePerSlot);
-    CreateRoom(data);
+    const toastId = toast.loading("room is creating");
+
+    const response = await CreateRoom(data);
+    if (response?.data?.success === true) {
+      toast.success("room added successfully", { id: toastId });
+    } else {
+      const errorMessage = getErrorMessage(response.error);
+      toast.error(errorMessage, { id: toastId });
+    }
+
     console.log(data);
   };
 

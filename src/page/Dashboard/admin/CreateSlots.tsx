@@ -7,15 +7,24 @@ import CustomSelect from "../../../componnets/form/CustomSelect";
 import { useCreateSlotsMutation } from "../../../redux/fetures/slots/slots.api";
 import { useGetAllRoomsQuery } from "../../../redux/fetures/rooms/rooms.api";
 import { slotResolver } from "../../../zodeSchema/ZodSchemaResolver";
+import { toast } from "sonner";
+import { getErrorMessage } from "../../../utils/genareteError";
 
 const CreateSlots = () => {
   const [createSlots] = useCreateSlotsMutation();
   const { data: roomData } = useGetAllRoomsQuery(undefined);
 
   const onSubmit = async (data: any) => {
-    console.log(data);
-    const res = await createSlots(data);
-    console.log(res);
+    const toastId = toast.loading("slot is creating");
+
+    const response = await createSlots(data);
+    if (response?.data?.success === true) {
+      toast.success("slot added successfully", { id: toastId });
+    } else {
+      const errorMessage = getErrorMessage(response.error);
+      toast.error(errorMessage, { id: toastId });
+    }
+    console.log(response);
   };
 
   const roomOptions =

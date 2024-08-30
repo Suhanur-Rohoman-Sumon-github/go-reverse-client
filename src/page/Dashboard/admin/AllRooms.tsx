@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from "react";
 import {
   Table,
   Dropdown,
@@ -7,10 +8,16 @@ import {
   TableColumnsType,
   TableProps,
 } from "antd";
-import { useGetAllRoomsQuery } from "../../../redux/fetures/rooms/rooms.api";
+import {
+  useDeleteRoomsMutation,
+  useGetAllRoomsQuery,
+  useUpdateRoomMutation,
+} from "../../../redux/fetures/rooms/rooms.api";
 import { TQueryParams, TRoomData } from "../../../types";
-import { useState } from "react";
 import Skeletons from "../../../componnets/skeleton/Skeletons";
+import UpdateRoom from "../../../componnets/modal/Modal";
+import Swal from "sweetalert2";
+import "sweetalert2/src/sweetalert2.scss";
 
 export type TTableDataType = Pick<
   TRoomData,
@@ -24,13 +31,15 @@ export type TTableDataType = Pick<
 >;
 
 const AllRooms = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedRoom, setSelectedRoom] = useState<TTableDataType | null>(null);
   const [params, setParams] = useState<TQueryParams[] | undefined>(undefined);
   const { data: roomData, isLoading, isFetching } = useGetAllRoomsQuery(params);
-
-  // Format table data to match the expected type
+  const [updateRoom] = useUpdateRoomMutation();
+  const [DeleteRoom] = useDeleteRoomsMutation();
   const tableData = roomData?.map(
     ({ _id, name, capacity, floorNo, pricePerSlot, amenities, roomNo }) => ({
-      key: _id, // Adding a key for Ant Design Table
+      key: _id,
       _id,
       name,
       capacity,
@@ -41,10 +50,26 @@ const AllRooms = () => {
     })
   );
 
-  const handleMenuClick = (key: string, record: TTableDataType) => {
+  const handleMenuClick = async (key: string, record: TTableDataType) => {
     if (key === "update") {
-      console.log(`Update room with id ${record._id}`);
+      setSelectedRoom(record);
+      setIsModalOpen(true);
     } else if (key === "delete") {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      });
+
+      if (result.isConfirmed) {
+        DeleteRoom(record._id);
+
+        Swal.fire("Deleted!", "Your product has been deleted.", "success");
+      }
       console.log(`Delete room with id ${record._id}`);
     }
   };
@@ -61,12 +86,6 @@ const AllRooms = () => {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      filters: [
-        {
-          text: "valobasa",
-          value: "valobasa",
-        },
-      ],
       responsive: ["xs", "sm", "md", "lg", "xl"],
     },
     {
@@ -125,6 +144,22 @@ const AllRooms = () => {
     }
   };
 
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedRoom(null);
+  };
+
+  const handleUpdateRoom = async (data: any) => {
+    console.log(selectedRoom?._id);
+    const response = await updateRoom({ id: selectedRoom?._id, payload: data });
+    if (response?.data?.success) {
+      console.log("Room updated successfully");
+      handleCloseModal();
+    } else {
+      console.log("Failed to update room");
+    }
+  };
+
   if (isLoading) {
     return <Skeletons />;
   }
@@ -139,6 +174,16 @@ const AllRooms = () => {
         showSorterTooltip={{ target: "sorter-icon" }}
         scroll={{ x: 800 }}
       />
+
+      {/* Modal for updating room */}
+      {selectedRoom && (
+        <UpdateRoom
+          room={selectedRoom}
+          isVisible={isModalOpen}
+          onClose={handleCloseModal}
+          onSubmit={handleUpdateRoom}
+        />
+      )}
     </div>
   );
 };

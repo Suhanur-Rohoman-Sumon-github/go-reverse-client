@@ -1,4 +1,4 @@
-import { TResponseRedux, TSlots } from "../../../types";
+import { TQueryParams, TResponseRedux, TSlots } from "../../../types";
 import { baseApi } from "../../api/baseApi";
 
 const slotApi = baseApi.injectEndpoints({
@@ -6,9 +6,10 @@ const slotApi = baseApi.injectEndpoints({
     getAllSlots: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
-        
-        if (args) {
-          params.append('roomId', args);
+        if(args){
+            args.forEach((item:TQueryParams) => {
+             params.append(item.name,item.value as string)
+           });
         }
 
         return {

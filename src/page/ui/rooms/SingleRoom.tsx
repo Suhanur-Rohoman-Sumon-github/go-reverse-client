@@ -1,31 +1,40 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { useGetSingleRoomQuery } from "../../../redux/fetures/rooms/rooms.api";
-import { useGetAllSlotsQuery } from "../../../redux/fetures/slots/slots.api";
+import { DatePicker } from "antd"; // Import Ant Design DatePicker
 import moment from "moment";
+import { useGetSingleRoomQuery } from "../../../redux/fetures/rooms/rooms.api";
 import { useAppDispatch, useAppSelector } from "../../../redux/hook";
 import { setProductPrice } from "../../../redux/fetures/payment/payment.slice";
-import { TSingleRoom } from "../../../types";
+import { TQueryParams, TSingleRoom } from "../../../types";
 import Skeletons from "../../../componnets/skeleton/Skeletons";
 import {
   setDate,
   setRoom,
   toggleSlotId,
 } from "../../../redux/fetures/booking/booking.slice";
+import { useGetAllSlotsQuery } from "../../../redux/fetures/slots/slots.api";
 
 const SingleRoom = () => {
   const [isSlotAvailable] = useState(true);
+  const [selectedDate, setSelectedDate] = useState<string | null>("");
   const disPatch = useAppDispatch();
   const { slotIds } = useAppSelector((state) => state.bookings);
 
   const { roomId } = useParams();
+
+  const queryParams: TQueryParams[] = [
+    { name: "roomId", value: roomId as string },
+    { name: "date", value: selectedDate as string },
+  ];
 
   const { data: SingleRoom, isLoading: roomLoading } = useGetSingleRoomQuery(
     roomId as string
   );
 
   const { data: availableSlots, isLoading: slotsLoading } =
-    useGetAllSlotsQuery(roomId);
+    useGetAllSlotsQuery(queryParams);
+
+  console.log(availableSlots);
 
   if (roomLoading || slotsLoading) {
     return (
@@ -39,13 +48,21 @@ const SingleRoom = () => {
 
   const { name, capacity, floorNo, pricePerSlot, amenities, image } =
     SingleRoom as TSingleRoom;
-  const totalAmount = pricePerSlot * availableSlots!.length;
+  const totalAmount = pricePerSlot * (availableSlots?.length || 0);
 
   const handleSlotSelection = (slotId: string) => {
     disPatch(toggleSlotId(slotId));
     disPatch(setProductPrice(totalAmount));
     disPatch(setRoom(roomId as string));
-    disPatch(setDate(availableSlots![0].date as string));
+    disPatch(setDate(selectedDate!));
+  };
+
+  const handleDateChange = (date: moment.Moment | null) => {
+    if (date) {
+      setSelectedDate(date.format("YYYY-MM-DD"));
+    } else {
+      setSelectedDate(null);
+    }
   };
 
   return (
@@ -117,17 +134,25 @@ const SingleRoom = () => {
         </div>
       </section>
 
+      {/* Date Picker and Booking Section */}
       <section id="booking-section" className="ml-6">
         <h2 className="text-primary">Book a slot</h2>
+
+        <DatePicker
+          className="mb-4 w-full"
+          onChange={handleDateChange}
+          format="YYYY-MM-DD"
+          placeholder="Select a date"
+        />
 
         {availableSlots && availableSlots?.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             {availableSlots?.map((slot) => (
               <button
                 key={slot._id}
-                onClick={() => handleSlotSelection(slot._id)}
+                onClick={() => handleSlotSelection(slot._id as string)}
                 className={`w-full px-4 py-2 border rounded-lg ${
-                  slotIds.includes(slot._id)
+                  slotIds.includes(slot._id as string)
                     ? "bg-[#4cbfb0] text-white"
                     : "bg-white text-gray-700"
                 }`}

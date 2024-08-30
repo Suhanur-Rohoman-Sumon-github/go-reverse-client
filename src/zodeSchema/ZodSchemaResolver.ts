@@ -50,6 +50,17 @@ export const registrationResolver = z.object({
       z.string({ required_error: "Please select at least one amenity" })
     ),
   });
+  export const updateRoomResolver = z.object({
+    name: z.string({ required_error: "Room name is required" }),
+    image: z.string({ required_error: "image name is required" }),
+    capacity: z.number({ required_error: "Capacity must be at least 1" }),
+    pricePerSlot: z.number({ required_error: "Price per slot must be positive" }),
+    roomNo: z.number({ required_error: "Room type is required" }),
+    floorNo: z.number({ required_error: "Room type is required" }),
+    amenities: z.array(
+      z.string({ required_error: "Please select at least one amenity" })
+    ),
+  });
 
   export const slotResolver = z.object({
     room: z.string({ required_error: "Room ID is required" }),
