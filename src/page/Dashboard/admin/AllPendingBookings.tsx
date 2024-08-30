@@ -1,5 +1,6 @@
 import { Table, Button, Tag, TableColumnsType } from "antd";
 import {
+  useDeleteBookingsMutation,
   useGetAllBookingsQuery,
   useUpdateBookingMutation,
 } from "../../../redux/fetures/booking/booking.api";
@@ -19,7 +20,10 @@ const getStateColor = (status: string) => {
 
 const AllPendingBookings = () => {
   const { data, isLoading } = useGetAllBookingsQuery(undefined);
+
   const [updateBooking] = useUpdateBookingMutation();
+  const [deleteBookings] = useDeleteBookingsMutation();
+
   const handleConfirm = async (id: string) => {
     await updateBooking({
       id,
@@ -33,7 +37,11 @@ const AllPendingBookings = () => {
       payload: { isConfirmed: "canceled" },
     });
   };
+  const handleDelete = async (id: string) => {
+    await deleteBookings(id);
+  };
 
+  // Define table columns
   const columns: TableColumnsType<TBookingData> = [
     {
       title: "Room Name",
@@ -93,16 +101,25 @@ const AllPendingBookings = () => {
           >
             Cancel
           </Button>
+          <Button
+            type="default"
+            onClick={() => handleDelete(record._id)}
+            style={{ marginLeft: 8 }}
+          >
+            Delete
+          </Button>
         </div>
       ),
     },
   ];
 
+  // Transform fetched data to table-friendly format
   const tableData = (data as TBookingData[])?.map((booking: TBookingData) => ({
     key: booking._id,
     ...booking,
   }));
 
+  // Render loading state
   if (isLoading) {
     return (
       <div>
@@ -111,6 +128,7 @@ const AllPendingBookings = () => {
     );
   }
 
+  // Render table with data
   return (
     <div>
       <h1>Pending Bookings</h1>

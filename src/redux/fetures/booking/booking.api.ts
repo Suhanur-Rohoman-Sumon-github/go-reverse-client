@@ -19,12 +19,12 @@ const bookingApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Bookings', id: 'LIST' }],
     }),
-    deleteRooms:builder.mutation({
+    deleteBookings:builder.mutation({
       query:(id)=>({
-        url:`/rooms/${id}`,
+        url:`/bookings/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: [{ type: 'Rooms', id: 'LIST' }],
+      invalidatesTags: [{ type: 'Bookings', id: 'LIST' }],
     }),
     getMyBookings: builder.query({
       query: (args) => {
@@ -73,4 +73,4 @@ const bookingApi = baseApi.injectEndpoints({
   
 });
 
-export const { useGetMyBookingsQuery,useGetAllBookingsQuery,useCreateBookingMutation,useUpdateBookingMutation } = bookingApi;
+export const { useGetMyBookingsQuery,useGetAllBookingsQuery,useCreateBookingMutation,useUpdateBookingMutation,useDeleteBookingsMutation } = bookingApi;
