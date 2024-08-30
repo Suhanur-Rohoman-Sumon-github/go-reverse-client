@@ -6,7 +6,7 @@ export type TRoomData = {
     capacity: number
     pricePerSlot: number
     amenities: string[]
-   
+    image: string
   }
 
   export type TSingleRoom = {
@@ -17,6 +17,7 @@ export type TRoomData = {
     capacity: number
     pricePerSlot: number
     amenities: string[]
+    date:string
   }
 
   export interface TSlots {

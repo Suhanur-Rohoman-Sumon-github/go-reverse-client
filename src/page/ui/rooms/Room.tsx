@@ -3,7 +3,7 @@ import { useGetAllRoomsQuery } from "../../../redux/fetures/rooms/rooms.api";
 import { TQueryParams } from "../../../types";
 import { Link } from "react-router-dom";
 import Skeletons from "../../../componnets/skeleton/Skeletons";
-
+import img from "../../../assets/sfs-removebg-preview.png";
 const RoomPage = () => {
   const [params, setParams] = useState<TQueryParams[]>([]);
   const [filters, setFilters] = useState({
@@ -16,6 +16,7 @@ const RoomPage = () => {
   console.log(filters.priceRange);
 
   const { data: roomsData, isLoading } = useGetAllRoomsQuery(params);
+  console.log(roomsData);
 
   useEffect(() => {
     const buildQueryParams = () => {
@@ -178,7 +179,11 @@ const RoomPage = () => {
                   key={room._id}
                   className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 ease-in-out"
                 >
-                  <img alt={room.name} className="w-full h-48 object-cover" />
+                  <img
+                    src={room?.image}
+                    alt={room.name}
+                    className="w-full h-48 object-cover"
+                  />
                   <div className="p-4">
                     <h2 className="text-lg font-bold text-gray-800">
                       {room.name}
@@ -197,10 +202,7 @@ const RoomPage = () => {
               ))
             ) : (
               <div className="mt-5">
-                <img
-                  src="https://png.pngtree.com/element_our/20200610/ourmid/pngtree-not-found-image_2238448.jpg"
-                  alt=""
-                />
+                <img src={img} alt="" />
                 <p className="text-primary text-center">No data found</p>
               </div>
             ))}

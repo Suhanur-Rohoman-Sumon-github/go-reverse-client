@@ -1,8 +1,8 @@
 import { TResponseRedux, TRoomData,TQueryParams, TSingleRoom } from "../../../types";
 import { baseApi } from "../../api/baseApi";
-const roomApi = baseApi.injectEndpoints({
+const bookingApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    createRoom:builder.mutation({
+    createBooking:builder.mutation({
       query:(payload)=>({
         url:`/bookings`,
         body:payload,
@@ -54,4 +54,4 @@ const roomApi = baseApi.injectEndpoints({
   
 });
 
-export const { useGetAllRoomsQuery,useGetSingleRoomQuery,useCreateRoomMutation } = roomApi;
+export const { useGetAllRoomsQuery,useGetSingleRoomQuery,useCreateBookingMutation } = bookingApi;

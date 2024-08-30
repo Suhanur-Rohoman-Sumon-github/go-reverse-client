@@ -13,6 +13,7 @@ const CreateSlots = () => {
   const { data: roomData } = useGetAllRoomsQuery(undefined);
 
   const onSubmit = (data: any) => {
+    console.log(data);
     createSlots(data);
   };
 

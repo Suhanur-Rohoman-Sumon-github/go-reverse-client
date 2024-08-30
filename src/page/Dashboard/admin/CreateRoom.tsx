@@ -1,21 +1,23 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Row, Col, Card } from "antd";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CustomForm from "../../../componnets/form/CustomForm";
 import CustomInput from "../../../componnets/form/CustomInput";
 import CustomSelect from "../../../componnets/form/CustomSelect";
-import { FormEventHandler } from "react";
 import { roomResolver } from "../../../zodeSchema/ZodSchemaResolver";
+import { useCreateRoomMutation } from "../../../redux/fetures/rooms/rooms.api";
 
 const CreateRoom = () => {
-  const onSubmit = (data: FormEventHandler) => {
+  const [CreateRoom] = useCreateRoomMutation();
+  const onSubmit = (data: any) => {
+    console.log(data);
+    data.roomNo = Number(data.roomNo);
+    data.floorNo = Number(data.floorNo);
+    data.capacity = Number(data.capacity);
+    data.pricePerSlot = Number(data.pricePerSlot);
+    CreateRoom(data);
     console.log(data);
   };
-
-  const roomOptions = [
-    { value: "standard", label: "Standard" },
-    { value: "deluxe", label: "Deluxe" },
-    { value: "suite", label: "Suite" },
-  ];
 
   const amenityOptions = [
     { value: "Projector", label: "Projector" },
@@ -39,7 +41,7 @@ const CreateRoom = () => {
           <Col span={12}>
             <CustomInput
               label="Room Name"
-              name="roomName"
+              name="name"
               placeholder="Enter room name"
               type="text"
             />
@@ -53,7 +55,24 @@ const CreateRoom = () => {
             />
           </Col>
         </Row>
-
+        <Row gutter={16}>
+          <Col span={12}>
+            <CustomInput
+              label="Room Number"
+              name="roomNo"
+              placeholder="Enter room number"
+              type="text"
+            />
+          </Col>
+          <Col span={12}>
+            <CustomInput
+              label="Room Number"
+              name="floorNo"
+              placeholder="Enter room number"
+              type="text"
+            />
+          </Col>
+        </Row>
         <Row gutter={16}>
           <Col span={12}>
             <CustomInput
@@ -65,21 +84,13 @@ const CreateRoom = () => {
           </Col>
           <Col span={12}>
             <CustomSelect
-              options={roomOptions}
-              name={"roomType"}
-              label={"Room Type"}
-              defaultValue="standard"
+              mode={"multiple "}
+              label="Amenities"
+              name="amenities"
+              options={amenityOptions}
             />
           </Col>
         </Row>
-        <Col>
-          <CustomSelect
-            mode={"multiple "}
-            label="Amenities"
-            name="amenities"
-            options={amenityOptions}
-          />
-        </Col>
 
         <button className="btn-primary w-full" style={{ marginTop: "20px" }}>
           submit

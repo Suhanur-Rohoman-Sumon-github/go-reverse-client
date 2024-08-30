@@ -8,6 +8,7 @@ import {
   setPaymentMethod,
 } from "../../redux/fetures/payment/payment.slice";
 import { useEffect } from "react";
+import ScrollToTop from "../scroltoTop/ScrollsToTop";
 const Shiping = () => {
   const stripePromise = loadStripe(import.meta.env.VITE_PAYMENT_PK);
   const dispatch = useAppDispatch();
@@ -29,9 +30,8 @@ const Shiping = () => {
 
   return (
     <div className="container mx-auto py-8">
-      {/* <ScrollToTop /> */}
+      <ScrollToTop />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Left side: Shipping Information */}
         <div className="p-6 rounded-lg">
           <h1 className="text-2xl font-semibold mb-4">Shipping Information</h1>
           <p className="mb-6">

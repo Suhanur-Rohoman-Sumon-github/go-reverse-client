@@ -1,8 +1,10 @@
 import image from "../../assets/pngtree-check-mark-button-green-confirmation-png-image_4540174-removebg-preview.png";
+import ScrollToTop from "../scroltoTop/ScrollsToTop";
 
 const PaymentConfarmationPage = () => {
   return (
     <div className="container mx-auto py-16 px-4 text-center">
+      <ScrollToTop />
       <img
         src={image}
         alt="Confirmation"

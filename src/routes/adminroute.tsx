@@ -34,7 +34,7 @@ export const adminPaths = [
   {
     path: "crete-slots",
     element: <CreateSlots />,
-    label: "Crete Slots",
+    label: "Create Slots",
     icon: <FaCheckToSlot style={{ fontSize: "20px" }} />,
   },
 ];

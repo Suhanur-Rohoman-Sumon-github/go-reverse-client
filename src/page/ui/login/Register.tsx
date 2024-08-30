@@ -14,14 +14,26 @@ const RegistrationForm = () => {
   const [register] = useRegistrationMutation();
 
   const onSubmit = async (data: any) => {
+    console.log(data);
+    const { streetAddress, city, state, zip } = data;
+    const newAddress = {
+      street: streetAddress,
+      city: city,
+      state: state,
+      zipCode: zip,
+    };
+    data.addresses = newAddress;
     const toastId = toast.loading("user is creating");
     data.role = "user";
+
+    // Register the user
     const response = await register(data);
+    console.log(response);
     if (response?.data?.success === true) {
-      toast.success("user sing up successfully", { id: toastId });
+      toast.success("User signed up successfully", { id: toastId });
     } else {
       const errorMessage = getErrorMessage(response.error);
-      toast.error(`${JSON.stringify(errorMessage)}`, { id: toastId });
+      toast.error(errorMessage, { id: toastId });
     }
   };
 
@@ -106,6 +118,15 @@ const RegistrationForm = () => {
           </div>
 
           {/* Password Field */}
+
+          <div className="mb-4">
+            <CustomInput
+              label="Profile image"
+              name="profileImage"
+              type="text"
+              placeholder="Enter your profile image"
+            />
+          </div>
           <div className="mb-4">
             <CustomInput
               label="Password"

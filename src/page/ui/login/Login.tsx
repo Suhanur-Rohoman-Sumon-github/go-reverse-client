@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import CustomForm from "../../../componnets/form/CustomForm";
 import CustomInput from "../../../componnets/form/CustomInput";
 import { FormEventHandler } from "react";
+import { getErrorMessage } from "../../../utils/genareteError";
 
 const Login = () => {
   const [login] = useLoginMutation();
@@ -16,27 +17,24 @@ const Login = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (data: FormEventHandler) => {
-    const tostId = toast.loading("user log ing  ");
-    console.log(data);
-    try {
-      const res = await login(data).unwrap();
+    const toastId = toast.loading("user loging in  ");
 
-      const user = verifyToken(res.token) as TUser;
+    const response = await login(data);
+
+    if (response?.data?.success === true) {
+      const user = verifyToken(response.data.token) as TUser;
       console.log(user);
-      dispatch(setUser({ user: user, token: res.token }));
-      toast.success("user login successfully", { id: tostId, duration: 2000 });
+      dispatch(setUser({ user: user, token: response.data.token }));
+      toast.success("user login successfully", { id: toastId, duration: 2000 });
       navigate(`/${user.role}/dashboard`);
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (err) {
-      toast.error("something went wrong", {
-        id: tostId,
-        duration: 2000,
-      });
+    } else {
+      const errorMessage = getErrorMessage(response.error);
+      toast.error(errorMessage, { id: toastId });
     }
   };
 
   const defaultValues = {
-    email: "jodfhb.doe@example.com",
+    email: "jodsadsdfsdff.doe@example.com",
     password: "PlainTextPassword",
   };
 

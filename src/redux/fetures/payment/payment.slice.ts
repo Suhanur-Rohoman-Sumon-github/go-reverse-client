@@ -9,7 +9,7 @@ interface PaymentState {
 const initialState: PaymentState = {
     isPaymentConfirm : false,
   isStripe: false,
-  price:0
+  price:5
 };
 
 const paymentSlice = createSlice({

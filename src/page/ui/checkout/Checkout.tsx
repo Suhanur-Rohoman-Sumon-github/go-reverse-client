@@ -6,11 +6,17 @@ import Shiping from "../../../componnets/checkout/Shiping";
 import PaymentConfarmationPage from "../../../componnets/checkout/PaymentConfarmationPage";
 import { useAppDispatch, useAppSelector } from "../../../redux/hook";
 import { updateIsSubmitted } from "../../../redux/fetures/checkout/checkout.slice";
+import ScrollToTop from "../../../componnets/scroltoTop/ScrollsToTop";
+import { useCreateBookingMutation } from "../../../redux/fetures/booking/booking.api";
 
 const Checkout = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const disPatch = useAppDispatch();
   const { isSubmitted } = useAppSelector((state) => state.checkout);
+  const [createBooking] = useCreateBookingMutation(undefined);
+  const { date, room, slotIds, user } = useAppSelector(
+    (state) => state.bookings
+  );
 
   const { isStripe, isPaymentConfirm } = useAppSelector(
     (state) => state.payment
@@ -20,10 +26,17 @@ const Checkout = () => {
     setCurrentStep((prevStep) => prevStep + 1);
   };
 
-  //   const handleConfirmOrder = async () => {
-  //     createOrder(orderInfo);
-  //     setCurrentStep((prevStep) => prevStep + 1);
-  //   };
+  const handleConfirmOrder = async () => {
+    const data = {
+      date,
+      room,
+      slots: slotIds,
+      user,
+    };
+    console.log(data);
+    createBooking(data);
+    setCurrentStep((prevStep) => prevStep + 1);
+  };
 
   const handlePreviousStep = () => {
     setCurrentStep((prevStep) => prevStep - 1);
@@ -45,6 +58,7 @@ const Checkout = () => {
 
   return (
     <div className="my-32 w-9/12 mx-auto">
+      <ScrollToTop />
       <div className="flex items-center justify-center space-x-4">
         <StepIndicator
           step={1}
@@ -89,7 +103,7 @@ const Checkout = () => {
         ) : null}
         {currentStep === 2 && isStripe && isPaymentConfirm && (
           <button
-            onClick={handleNextStep}
+            onClick={handleConfirmOrder}
             className="btn-primary px-4 py-2 rounded-md"
           >
             Confirm Booking
