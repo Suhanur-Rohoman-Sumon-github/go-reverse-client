@@ -7,7 +7,7 @@ export  type TBookings = {
 
  export type TMyBookings = {
     _id: string; 
-    date: string; 
+    date?: string; 
     isConfirmed: string; 
     isDeleted: boolean
     room: {
@@ -35,6 +35,7 @@ export  type TBookings = {
     _id: string;
     totalAmount: number;
     isConfirmed: string;
+    date?:string
     room: {
       _id: string;
       name: string;
@@ -48,7 +49,7 @@ export  type TBookings = {
       startTime: string;
       endTime: string;
       isBooked: boolean;
-      date:string
+      
     }[];
   }
   
