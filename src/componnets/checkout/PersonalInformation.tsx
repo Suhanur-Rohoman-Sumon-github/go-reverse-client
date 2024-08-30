@@ -25,7 +25,7 @@ const PersonalInformation = () => {
   useEffect(() => {
     if (userData?.data) {
       const { email, name } = userData.data;
-      const { street, city, state, zipCode } = userData.data.addresses || {};
+      const { street, city, zipCode } = userData.data.addresses || {};
 
       setDefaultValues({
         email: email || undefined,
@@ -39,7 +39,7 @@ const PersonalInformation = () => {
 
   const { isSubmitted } = useAppSelector((state) => state.checkout);
 
-  const onSubmit = (data: any) => {
+  const onSubmit = () => {
     disPatch(updateIsSubmitted(true));
     disPatch(setUser(userData?.data?._id));
   };

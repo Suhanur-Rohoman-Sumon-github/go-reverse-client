@@ -40,7 +40,6 @@ const SingleRoom = () => {
   const { name, capacity, floorNo, pricePerSlot, amenities, image } =
     SingleRoom as TSingleRoom;
   const totalAmount = pricePerSlot * availableSlots!.length;
-  console.log(availableSlots![0].date);
 
   const handleSlotSelection = (slotId: string) => {
     disPatch(toggleSlotId(slotId));

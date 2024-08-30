@@ -4,7 +4,7 @@ const roomApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     createRoom:builder.mutation({
       query:(payload)=>({
-        url:`/bookings`,
+        url:`/rooms`,
         body:payload,
         method: 'POST',
       }),

@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "../../../redux/hook";
 import { updateIsSubmitted } from "../../../redux/fetures/checkout/checkout.slice";
 import ScrollToTop from "../../../componnets/scroltoTop/ScrollsToTop";
 import { useCreateBookingMutation } from "../../../redux/fetures/booking/booking.api";
+import { setSlotsId } from "../../../redux/fetures/slots/slots.slice";
 
 const Checkout = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -33,7 +34,7 @@ const Checkout = () => {
       slots: slotIds,
       user,
     };
-    console.log(data);
+    disPatch(setSlotsId(""));
     createBooking(data);
     setCurrentStep((prevStep) => prevStep + 1);
   };

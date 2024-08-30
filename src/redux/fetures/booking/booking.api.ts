@@ -10,7 +10,7 @@ const bookingApi = baseApi.injectEndpoints({
       }),
      
     }),
-    getAllRooms: builder.query({
+    getMyBookings: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
         if(args){
@@ -19,7 +19,7 @@ const bookingApi = baseApi.injectEndpoints({
            });
         }
         return {
-          url: `/rooms`,
+          url: `/my-bookings`,
           method: 'GET',
           params:params
         };
@@ -54,4 +54,4 @@ const bookingApi = baseApi.injectEndpoints({
   
 });
 
-export const { useGetAllRoomsQuery,useGetSingleRoomQuery,useCreateBookingMutation } = bookingApi;
+export const { useGetMyBookingsQuery,useGetSingleRoomQuery,useCreateBookingMutation } = bookingApi;

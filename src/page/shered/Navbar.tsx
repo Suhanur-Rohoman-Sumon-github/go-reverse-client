@@ -4,12 +4,14 @@ import { Link, NavLink } from "react-router-dom";
 import { currentUser, logOut } from "../../redux/fetures/auth/auth.slice";
 import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import { Avatar, Button, Dropdown, Menu, Tooltip } from "antd";
-import { FaUser } from "react-icons/fa6";
+import useGetMe from "../../hooks/useGetMe";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const dispatch = useAppDispatch();
+  const data = useGetMe();
+  console.log(data);
   const user = useAppSelector(currentUser);
   const handleLogout = () => {
     dispatch(logOut());
@@ -113,7 +115,7 @@ const Navbar = () => {
                     >
                       <Avatar
                         size={40}
-                        icon={<FaUser />}
+                        src={data?.profileImage}
                         style={{ cursor: "pointer" }}
                       />
                     </Dropdown>

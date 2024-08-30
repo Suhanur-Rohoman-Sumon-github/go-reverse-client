@@ -3,8 +3,10 @@ import Aos from "../../../hooks/Aos";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../../redux/hook";
 import { currentUser } from "../../../redux/fetures/auth/auth.slice";
+import useGetMe from "../../../hooks/useGetMe";
 
 const Banner = () => {
+  const data = useGetMe();
   const user = useAppSelector(currentUser);
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -23,7 +25,7 @@ const Banner = () => {
         className="relative z-10 text-center text-[#062132] px-4 top-40 "
       >
         {user ? (
-          <h1 className="text-banner">{`Well come back dear ${user?.userId}`}</h1>
+          <h1 className="text-banner">{`Well come back dear ${data?.name}`}</h1>
         ) : (
           <h1 className="text-banner">Book Your Dream Getaway Today</h1>
         )}
