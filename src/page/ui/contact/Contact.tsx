@@ -29,15 +29,19 @@ const Contact = () => {
           </h2>
           <div className="flex items-center gap-x-4 mb-6">
             <span className="text-[#4cbfb0] text-3xl font-semibold">20m</span>
-            <p className="text-lg">users worldwide</p>
+            <p className="text-lg">10k+ bookings completed successfully</p>
           </div>
           <div className="flex items-center gap-x-4 mb-6">
             <span className="text-[#4cbfb0] text-3xl font-semibold">100k</span>
-            <p className="text-lg">companies use Calendly</p>
+            <p className="text-lg">
+              500+ businesses trust Go Reverse for their booking needs
+            </p>
           </div>
           <div className="flex items-center gap-x-4 mb-6">
             <span className="text-[#4cbfb0] text-3xl font-semibold">200k</span>
-            <p className="text-lg">countries with monthly active users</p>
+            <p className="text-lg">
+              100+ countries benefit from our booking solutions
+            </p>
           </div>
         </div>
         <form className="p-6 lg:w-1/2">
