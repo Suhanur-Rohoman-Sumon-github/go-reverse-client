@@ -2,7 +2,7 @@ import { BaseQueryApi, BaseQueryFn, createApi, DefinitionType, FetchArgs, fetchB
 import { RootState } from '../store'
 import { logOut, setUser } from '../fetures/auth/auth.slice'
 
-const baseQuery = fetchBaseQuery({ baseUrl: 'http://localhost:5000/api',
+const baseQuery = fetchBaseQuery({ baseUrl: 'https://booking-system-dun-ten.vercel.app/api',
     credentials:"include",
     prepareHeaders:(heders,{getState})=>{
         const token =  (getState() as RootState).auth.token 
@@ -18,7 +18,7 @@ const baseQuery = fetchBaseQuery({ baseUrl: 'http://localhost:5000/api',
  let result = await baseQuery(arg,api,extraOptions)
  if(result?.error?.status === 401){
     console.log('sending refresh token');
-    const res = await fetch('http://localhost:5000/api/auth/refresh-token',{
+    const res = await fetch('https://booking-system-dun-ten.vercel.app/api/auth/refresh-token',{
        method:'POST',
        credentials:'include'
     })
