@@ -48,6 +48,7 @@ export  type TBookings = {
       startTime: string;
       endTime: string;
       isBooked: boolean;
+      date:string
     }[];
   }
   

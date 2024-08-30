@@ -5,13 +5,14 @@ import { currentUser, logOut } from "../../redux/fetures/auth/auth.slice";
 import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import { Avatar, Button, Dropdown, Menu, Tooltip } from "antd";
 import useGetMe from "../../hooks/useGetMe";
+import { setUserBookingUser } from "../../redux/fetures/booking/booking.slice";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const dispatch = useAppDispatch();
   const data = useGetMe();
-  console.log(data);
+  dispatch(setUserBookingUser(data?._id));
   const user = useAppSelector(currentUser);
   const handleLogout = () => {
     dispatch(logOut());

@@ -11,6 +11,21 @@ const bookingApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Bookings', id: 'LIST' }],
     }),
+    updateBooking:builder.mutation({
+      query:({payload,id})=>({
+        url:`/bookings/${id}`,
+        body:payload,
+        method: 'PATCH',
+      }),
+      invalidatesTags: [{ type: 'Bookings', id: 'LIST' }],
+    }),
+    deleteRooms:builder.mutation({
+      query:(id)=>({
+        url:`/rooms/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: [{ type: 'Rooms', id: 'LIST' }],
+    }),
     getMyBookings: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
@@ -58,4 +73,4 @@ const bookingApi = baseApi.injectEndpoints({
   
 });
 
-export const { useGetMyBookingsQuery,useGetAllBookingsQuery,useCreateBookingMutation } = bookingApi;
+export const { useGetMyBookingsQuery,useGetAllBookingsQuery,useCreateBookingMutation,useUpdateBookingMutation } = bookingApi;

@@ -1,5 +1,8 @@
 import { Table, Button, Tag, TableColumnsType } from "antd";
-import { useGetAllBookingsQuery } from "../../../redux/fetures/booking/booking.api";
+import {
+  useGetAllBookingsQuery,
+  useUpdateBookingMutation,
+} from "../../../redux/fetures/booking/booking.api";
 import { TBookingData } from "../../../types/booking.type";
 import Skeletons from "../../../componnets/skeleton/Skeletons";
 
@@ -16,13 +19,21 @@ const getStateColor = (status: string) => {
 
 const AllPendingBookings = () => {
   const { data, isLoading } = useGetAllBookingsQuery(undefined);
-
-  const handleConfirm = (id: string) => {
-    console.log(`Confirm booking with id ${id}`);
+  const [updateBooking] = useUpdateBookingMutation();
+  const handleConfirm = async (id: string) => {
+    const respone = await updateBooking({
+      id,
+      payload: { isConfirmed: "confirmed" },
+    });
+    console.log(respone);
   };
 
-  const handleCancel = (id: string) => {
-    console.log(`Cancel booking with id ${id}`);
+  const handleCancel = async (id: string) => {
+    const respone = await updateBooking({
+      id,
+      payload: { isConfirmed: "canceled" },
+    });
+    console.log(respone);
   };
 
   const columns: TableColumnsType<TBookingData> = [

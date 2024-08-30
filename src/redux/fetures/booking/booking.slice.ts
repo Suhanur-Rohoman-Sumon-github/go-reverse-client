@@ -8,7 +8,7 @@ interface TBookingState {
   user: string | null;
 }
 
-// Update the initial state with default values for the new fields
+
 const initialState: TBookingState = {
   slotIds: [],
   date: null,  
@@ -36,11 +36,11 @@ const bookingSlice = createSlice({
     setRoom(state, action: PayloadAction<string>) {
       state.room = action.payload;
     },
-    setUser(state, action: PayloadAction<string>) {
+    setUserBookingUser(state, action: PayloadAction<string>) {
       state.user = action.payload;
     },
   },
 });
 
-export const { toggleSlotId, setDate,  setRoom, setUser } = bookingSlice.actions;
+export const { toggleSlotId, setDate,  setRoom, setUserBookingUser } = bookingSlice.actions;
 export default bookingSlice.reducer;

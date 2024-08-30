@@ -6,13 +6,13 @@ import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import { updateIsSubmitted } from "../../redux/fetures/checkout/checkout.slice";
 import { personalInfoResolver } from "../../zodeSchema/ZodSchemaResolver";
 import ScrollToTop from "../scroltoTop/ScrollsToTop";
-import { useGetMeQuery } from "../../redux/fetures/auth/authApi";
-import Skeletons from "../skeleton/Skeletons";
-import { setUser } from "../../redux/fetures/booking/booking.slice";
+import { setUserBookingUser } from "../../redux/fetures/booking/booking.slice";
+import useGetMe from "../../hooks/useGetMe";
 
 const PersonalInformation = () => {
   const disPatch = useAppDispatch();
-  const { data: userData, isLoading } = useGetMeQuery(undefined);
+  const userData = useGetMe();
+  console.log(userData);
 
   const [defaultValues, setDefaultValues] = useState({
     email: undefined,
@@ -25,6 +25,7 @@ const PersonalInformation = () => {
   useEffect(() => {
     if (userData?.data) {
       const { email, name } = userData.data;
+
       const { street, city, zipCode } = userData.data.addresses || {};
 
       setDefaultValues({
@@ -35,18 +36,14 @@ const PersonalInformation = () => {
         zip: zipCode || undefined,
       });
     }
-  }, [userData]);
+  }, [userData, disPatch]);
 
   const { isSubmitted } = useAppSelector((state) => state.checkout);
 
   const onSubmit = () => {
     disPatch(updateIsSubmitted(true));
-    disPatch(setUser(userData?.data?._id));
+    disPatch(setUserBookingUser(userData?.data?._id));
   };
-
-  if (isLoading) {
-    return <Skeletons />;
-  }
 
   return (
     <div className="container mx-auto p-4">
