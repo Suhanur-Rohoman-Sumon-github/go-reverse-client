@@ -24,7 +24,6 @@ const CreateSlots = () => {
       const errorMessage = getErrorMessage(response.error);
       toast.error(errorMessage, { id: toastId });
     }
-    console.log(response);
   };
 
   const roomOptions =

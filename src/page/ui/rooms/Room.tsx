@@ -13,10 +13,7 @@ const RoomPage = () => {
     sort: "",
   });
 
-  console.log(filters.priceRange);
-
   const { data: roomsData, isLoading } = useGetAllRoomsQuery(params);
-  console.log(roomsData);
 
   useEffect(() => {
     const buildQueryParams = () => {

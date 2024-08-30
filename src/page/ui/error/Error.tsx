@@ -4,7 +4,7 @@ import { Link, useRouteError } from "react-router-dom";
 const Error = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const error: any = useRouteError();
-  console.log(error);
+
   return (
     <div>
       <section className="flex items-center h-screen text-gray-900">

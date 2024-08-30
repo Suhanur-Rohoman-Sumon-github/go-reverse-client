@@ -12,7 +12,6 @@ import useGetMe from "../../hooks/useGetMe";
 const PersonalInformation = () => {
   const disPatch = useAppDispatch();
   const userData = useGetMe();
-  console.log(userData);
 
   const [defaultValues, setDefaultValues] = useState({
     email: undefined,

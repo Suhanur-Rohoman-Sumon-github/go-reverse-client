@@ -70,7 +70,6 @@ const AllRooms = () => {
 
         Swal.fire("Deleted!", "Your product has been deleted.", "success");
       }
-      console.log(`Delete room with id ${record._id}`);
     }
   };
 
@@ -150,13 +149,15 @@ const AllRooms = () => {
   };
 
   const handleUpdateRoom = async (data: any) => {
-    console.log(selectedRoom?._id);
+    // Convert numeric fields to numbers
+    data.capacity = Number(data.capacity);
+    data.roomNo = Number(data.roomNo);
+    data.floorNo = Number(data.floorNo);
+    data.pricePerSlot = Number(data.pricePerSlot);
+
     const response = await updateRoom({ id: selectedRoom?._id, payload: data });
     if (response?.data?.success) {
-      console.log("Room updated successfully");
       handleCloseModal();
-    } else {
-      console.log("Failed to update room");
     }
   };
 

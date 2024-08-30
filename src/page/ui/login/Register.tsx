@@ -14,7 +14,6 @@ const RegistrationForm = () => {
   const [register] = useRegistrationMutation();
 
   const onSubmit = async (data: any) => {
-    console.log(data);
     const { streetAddress, city, state, zip } = data;
     const newAddress = {
       street: streetAddress,
@@ -28,7 +27,7 @@ const RegistrationForm = () => {
 
     // Register the user
     const response = await register(data);
-    console.log(response);
+
     if (response?.data?.success === true) {
       toast.success("User signed up successfully", { id: toastId });
     } else {

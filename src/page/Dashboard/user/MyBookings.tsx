@@ -17,8 +17,6 @@ const MyBookings = () => {
     isFetching,
   } = useGetMyBookingsQuery(undefined);
 
-  console.log(MyBookings);
-
   // Prepare table data with necessary fields
   const tableData: TTableDataType[] =
     MyBookings?.map(({ room, date, slots, isConfirmed }) => ({

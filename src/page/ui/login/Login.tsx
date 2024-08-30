@@ -26,16 +26,15 @@ const Login = () => {
       console.log(user);
       dispatch(setUser({ user: user, token: response.data.token }));
       toast.success("user login successfully", { id: toastId, duration: 2000 });
-      navigate(`/${user.role}/dashboard`);
+      if (user.role === "user") {
+        navigate(`/`);
+      } else {
+        navigate(`/${user.role}/dashboard`);
+      }
     } else {
       const errorMessage = getErrorMessage(response.error);
       toast.error(errorMessage, { id: toastId });
     }
-  };
-
-  const defaultValues = {
-    email: "jodsadsdfsdff.doe@example.com",
-    password: "PlainTextPassword",
   };
 
   return (
@@ -44,7 +43,7 @@ const Login = () => {
 
       <div className="absolute md:top-24 md:right-32 top-40 md:h-[550px] p-5 md:w-[600px] w-[400px] ml-8 bg-white bg-opacity-90 rounded-lg shadow-lg">
         <h2 className="text-2xl font-bold text-center mb-4">Login</h2>
-        <CustomForm onSubmit={onSubmit} defaultValues={defaultValues}>
+        <CustomForm onSubmit={onSubmit}>
           <div className="mb-4">
             <CustomInput
               name={"email"}

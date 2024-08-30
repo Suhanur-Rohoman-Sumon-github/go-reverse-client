@@ -12,7 +12,6 @@ import { getErrorMessage } from "../../../utils/genareteError";
 const CreateRoom = () => {
   const [CreateRoom] = useCreateRoomMutation();
   const onSubmit = async (data: any) => {
-    console.log(data);
     data.roomNo = Number(data.roomNo);
     data.floorNo = Number(data.floorNo);
     data.capacity = Number(data.capacity);
@@ -26,8 +25,6 @@ const CreateRoom = () => {
       const errorMessage = getErrorMessage(response.error);
       toast.error(errorMessage, { id: toastId });
     }
-
-    console.log(data);
   };
 
   const amenityOptions = [

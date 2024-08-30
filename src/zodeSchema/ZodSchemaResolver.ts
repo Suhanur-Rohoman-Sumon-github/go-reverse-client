@@ -51,15 +51,41 @@ export const registrationResolver = z.object({
     ),
   });
   export const updateRoomResolver = z.object({
-    name: z.string({ required_error: "Room name is required" }),
-    image: z.string({ required_error: "image name is required" }),
-    capacity: z.number({ required_error: "Capacity must be at least 1" }),
-    pricePerSlot: z.number({ required_error: "Price per slot must be positive" }),
-    roomNo: z.number({ required_error: "Room type is required" }),
-    floorNo: z.number({ required_error: "Room type is required" }),
-    amenities: z.array(
-      z.string({ required_error: "Please select at least one amenity" })
-    ),
+    name: z.string({ required_error: "Room name is required" }).optional(),
+    image: z.string({ required_error: "Image name is required" }).optional(),
+    capacity: z
+      .preprocess(
+        (val) => (typeof val === "string" ? parseInt(val, 10) : val),
+        z
+          .number({ required_error: "Capacity must be a number" })
+          .min(1, { message: "Capacity must be at least 1" })
+          .optional()
+      ),
+    pricePerSlot: z
+      .preprocess(
+        (val) => (typeof val === "string" ? parseFloat(val) : val),
+        z
+          .number({ required_error: "Price per slot must be a number" })
+          .positive({ message: "Price per slot must be positive" })
+          .optional()
+      ),
+    roomNo: z
+      .preprocess(
+        (val) => (typeof val === "string" ? parseInt(val, 10) : val),
+        z.number({ required_error: "Room number is required" })
+      ),
+    floorNo: z
+      .preprocess(
+        (val) => (typeof val === "string" ? parseInt(val, 10) : val),
+        z
+          .number({ required_error: "Floor number must be a number" })
+          .optional()
+      ),
+    amenities: z
+      .array(z.string().optional(), {
+        required_error: "Please select at least one amenity",
+      })
+      .optional(),
   });
 
   export const slotResolver = z.object({

@@ -21,19 +21,17 @@ const AllPendingBookings = () => {
   const { data, isLoading } = useGetAllBookingsQuery(undefined);
   const [updateBooking] = useUpdateBookingMutation();
   const handleConfirm = async (id: string) => {
-    const respone = await updateBooking({
+    await updateBooking({
       id,
       payload: { isConfirmed: "confirmed" },
     });
-    console.log(respone);
   };
 
   const handleCancel = async (id: string) => {
-    const respone = await updateBooking({
+    await updateBooking({
       id,
       payload: { isConfirmed: "canceled" },
     });
-    console.log(respone);
   };
 
   const columns: TableColumnsType<TBookingData> = [

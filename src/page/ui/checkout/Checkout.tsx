@@ -19,8 +19,6 @@ const Checkout = () => {
     (state) => state.bookings
   );
 
-  console.log(date);
-
   const { isStripe, isPaymentConfirm } = useAppSelector(
     (state) => state.payment
   );
@@ -36,10 +34,9 @@ const Checkout = () => {
       slots: slotIds,
       user,
     };
-    console.log(data);
 
-    const response = await createBooking(data);
-    console.log(response);
+    await createBooking(data);
+
     disPatch(setSlotsId(""));
     setCurrentStep((prevStep) => prevStep + 1);
   };
